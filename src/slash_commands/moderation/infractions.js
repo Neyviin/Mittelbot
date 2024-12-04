@@ -1,8 +1,5 @@
-const { SlashCommandBuilder } = require('discord.js');
-const { hasPermission } = require('../../../utils/functions/hasPermissions');
-const { publicInfractionResponse } = require('../../../utils/publicResponses/publicModResponses');
-const config = require('../../../src/assets/json/_config/config.json');
-const { Infractions } = require('../../../utils/functions/data/Infractions');
+const { publicInfractionResponse } = require('~utils/functions/publicResponses/publicModResponses');
+const Infractions = require('~utils/classes/Infractions');
 const { infractionsConfig, infractionPerms } = require('../_config/moderation/infractions');
 const { EmbedBuilder } = require('discord.js');
 
@@ -15,12 +12,12 @@ module.exports.run = async ({ main_interaction, bot }) => {
         case 'all':
             const user = main_interaction.options.getUser('user');
 
-            const closed_infractions = await Infractions.getClosed({
+            const closed_infractions = await new Infractions().getClosed({
                 user_id: user.id,
                 guild_id: main_interaction.guild.id,
             });
 
-            const open_infractions = await Infractions.getOpen({
+            const open_infractions = await new Infractions().getOpen({
                 user_id: user.id,
                 guild_id: main_interaction.guild.id,
             });
@@ -47,7 +44,7 @@ module.exports.run = async ({ main_interaction, bot }) => {
                             new EmbedBuilder()
                                 .setDescription(
                                     global.t.trans(
-                                        ['error.infractions.dontHaveAny', user],
+                                        ['error.moderation.infractions.dontHaveAny', user],
                                         main_interaction.guild.id
                                     )
                                 )
@@ -57,7 +54,7 @@ module.exports.run = async ({ main_interaction, bot }) => {
                     })
                     .catch((err) => {});
             }
-            if (JSON.parse(process.env.DEBUG)) console.info('Infraction Command passed!');
+            if (process.env.NODE_ENV === 'development') console.info('Infraction Command passed!');
 
             await publicInfractionResponse({
                 member: user.id,
@@ -70,7 +67,7 @@ module.exports.run = async ({ main_interaction, bot }) => {
         case 'view':
             const inf_id = main_interaction.options.getString('infractionid');
 
-            const { infraction } = await Infractions.get({
+            const { infraction } = await new Infractions().get({
                 inf_id,
                 guild_id: main_interaction.guild.id,
             });
@@ -82,7 +79,7 @@ module.exports.run = async ({ main_interaction, bot }) => {
                             new EmbedBuilder()
                                 .setDescription(
                                     global.t.trans(
-                                        ['error.infractions.notFoundWithId', inf_id],
+                                        ['error.moderation.infractions.notFoundWithId', inf_id],
                                         main_interaction.guild.id
                                     )
                                 )
@@ -110,16 +107,16 @@ module.exports.run = async ({ main_interaction, bot }) => {
         case 'remove':
             const infraction_id = main_interaction.options.getString('infractionid');
 
-            const { table } = await Infractions.get({
+            const { table } = await new Infractions().get({
                 inf_id: infraction_id,
                 guild_id: main_interaction.guild.id,
             });
 
             if (table) {
                 if (table === 'open') {
-                    await Infractions.deleteOpen(inf_id);
+                    await new Infractions().deleteOpen(inf_id);
                 } else {
-                    await Infractions.deleteClosed(infraction_id);
+                    await new Infractions().deleteClosed(infraction_id);
                 }
 
                 return main_interaction
@@ -129,7 +126,7 @@ module.exports.run = async ({ main_interaction, bot }) => {
                                 .setDescription(
                                     global.t.trans(
                                         [
-                                            'success.infractions.removed',
+                                            'success.moderation.infractions.removed',
                                             infraction_id,
                                             response ? 'has beend' : 'could not',
                                         ],
@@ -148,7 +145,10 @@ module.exports.run = async ({ main_interaction, bot }) => {
                             new EmbedBuilder()
                                 .setDescription(
                                     global.t.trans(
-                                        ['error.infractions.notFoundWithId', infraction_id],
+                                        [
+                                            'error.moderation.infractions.notFoundWithId',
+                                            infraction_id,
+                                        ],
                                         main_interaction.guild.id
                                     )
                                 )

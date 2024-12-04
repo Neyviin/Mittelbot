@@ -1,10 +1,9 @@
 const { EmbedBuilder } = require('discord.js');
-
-const genders = require('../../../utils/data/pride/gender/');
-const sexualities = require('../../../utils/data/pride/sexualities/');
+const genders = require('~assets/js/pride/gender/');
+const sexualities = require('~assets/js/pride/sexualities/');
 const { prideConfig } = require('../_config/fun/pride');
 
-module.exports.run = async ({ main_interaction, bot }) => {
+module.exports.run = async ({ main_interaction }) => {
     const type = main_interaction.options.getString('type');
     const newEmbed = new EmbedBuilder();
 
@@ -18,7 +17,7 @@ module.exports.run = async ({ main_interaction, bot }) => {
         newEmbed.setTitle(`Gender: ${newGender.name}`);
         newEmbed.setDescription(newGender.description);
         newEmbed.addFields({
-            name: global.t.trans(['info.pride.similarto'], main_interaction.guild.id),
+            name: global.t.trans(['info.fun.pride.similarto'], main_interaction.guild.id),
             value: newGender.differentFrom.join(', '),
         });
 
@@ -38,24 +37,27 @@ module.exports.run = async ({ main_interaction, bot }) => {
         const newSexuality = getRandomSexuality();
 
         newEmbed.setTitle(
-            globla.t.trans(['info.pride.sexuality', newSexuality.name], main_interaction.guild.id)
+            global.t.trans(
+                ['info.fun.pride.sexuality', newSexuality.name],
+                main_interaction.guild.id
+            )
         );
         newEmbed.setDescription(newSexuality.description);
         newEmbed.addFields(
             {
-                name: global.t.trans(['info.pride.genderField'], main_interaction.guild.id),
+                name: global.t.trans(['info.fun.pride.genderField'], main_interaction.guild.id),
                 value: newSexuality.gender.join(', '),
             },
             {
-                name: global.t.trans(['info.pride.attractedto'], main_interaction.guild.id),
+                name: global.t.trans(['info.fun.pride.attractedto'], main_interaction.guild.id),
                 value: newSexuality.attractedTo.join(', '),
             },
             {
-                name: global.t.trans(['info.pride.attractiontype'], main_interaction.guild.id),
+                name: global.t.trans(['info.fun.pride.attractiontype'], main_interaction.guild.id),
                 value: newSexuality.attractionType,
             },
             {
-                name: global.t.trans(['info.pride.similarto'], main_interaction.guild.id),
+                name: global.t.trans(['info.fun.pride.similarto'], main_interaction.guild.id),
                 value: newSexuality.differentFrom.join(', '),
             },
             {
@@ -88,7 +90,7 @@ module.exports.run = async ({ main_interaction, bot }) => {
                     ],
                     ephemeral: true,
                 })
-                .catch((err) => {});
+                .catch(() => {});
         });
 };
 

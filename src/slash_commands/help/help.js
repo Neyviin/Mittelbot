@@ -1,6 +1,6 @@
-const cmd_help = require('../../../src/assets/json/command_config/command_help.json');
+const cmd_help = require('~assets/json/command_config/command_help.json');
 const { EmbedBuilder } = require('discord.js');
-const { errorhandler } = require('../../../utils/functions/errorhandler/errorhandler');
+const { errorhandler } = require('~utils/functions/errorhandler/errorhandler');
 const { SlashCommandBuilder } = require('discord.js');
 const { ActionRowBuilder } = require('discord.js');
 const { ButtonBuilder } = require('discord.js');
@@ -15,7 +15,7 @@ module.exports.run = async ({ main_interaction, bot }) => {
     const helpEmbedMessage = new EmbedBuilder()
         .setTitle('Everything you need to know from each Command \n Choose a category')
         .setDescription(
-            'Something wrong? Report it on my discord https://mittelbot.blackdayz.de/support \n _All commands are slash commands (/)_ '
+            'Something wrong? Report it on my discord https://mittelbot.xyz/support \n _All commands are slash commands (/)_ '
         );
 
     for (const [index, [key, value]] of Object.entries(Object.entries(cmd_help))) {
@@ -67,10 +67,8 @@ module.exports.run = async ({ main_interaction, bot }) => {
             return msg;
         })
         .catch((err) => {
-            return errorhandler({
-                err,
-                fatal: true,
-            });
+            errorhandler({ err });
+            return;
         });
 
     const collector = helpMessage.createMessageComponentCollector({
@@ -131,10 +129,7 @@ module.exports.run = async ({ main_interaction, bot }) => {
                     fetchReply: true,
                 })
                 .catch((err) => {
-                    return errorhandler({
-                        err,
-                        fatal: true,
-                    });
+                    errorhandler({ err });
                 });
             return;
         }

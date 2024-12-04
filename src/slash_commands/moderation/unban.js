@@ -1,7 +1,7 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
-const { hasPermission } = require('../../../utils/functions/hasPermissions');
-const { isBanned } = require('../../../utils/functions/moderations/checkOpenInfractions');
-const { unbanUser } = require('../../../utils/functions/moderations/unbanUser');
+const { hasPermission } = require('~utils/functions/hasPermissions');
+const { isBanned } = require('~utils/functions/moderations/checkOpenInfractions');
+const { unbanUser } = require('~utils/functions/moderations/unbanUser');
 const { unbanConfig, unbanPerms } = require('../_config/moderation/unban');
 
 module.exports.run = async ({ main_interaction, bot }) => {
@@ -20,7 +20,10 @@ module.exports.run = async ({ main_interaction, bot }) => {
                 embeds: [
                     new EmbedBuilder()
                         .setDescription(
-                            global.t.trans(['error.unban.notBanned'], main_interaction.guild.id)
+                            global.t.trans(
+                                ['error.moderation.unban.notBanned'],
+                                main_interaction.guild.id
+                            )
                         )
                         .setColor(global.t.trans(['general.colors.error'])),
                 ],

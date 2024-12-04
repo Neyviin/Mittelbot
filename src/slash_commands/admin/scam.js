@@ -1,6 +1,7 @@
-const { PermissionFlagsBits } = require('discord.js');
-const { Scam } = require('../../../utils/functions/data/scam');
+const { PermissionFlagsBits, EmbedBuilder } = require('discord.js');
+const Scam = require('~utils/classes/scam');
 const { scamConfig, scamPerms } = require('../_config/admin/scam');
+const { isURL } = require('validator');
 
 module.exports.run = async ({ main_interaction, bot }) => {
     const hasPermission = await main_interaction.member.permissions.has(
@@ -25,16 +26,31 @@ module.exports.run = async ({ main_interaction, bot }) => {
     }
 
     const link = main_interaction.options.getString('link');
+    const subcommand = main_interaction.options.getSubcommand();
 
-    switch (main_interaction.options.getSubcommand()) {
+    if (subcommand !== 'view' && !isURL(link)) {
+        main_interaction.reply({
+            embeds: [
+                new EmbedBuilder()
+                    .setDescription(
+                        global.t.trans(['error.input.invalidLink', link], main_interaction.guild.id)
+                    )
+                    .setColor(global.t.trans(['general.colors.error'])),
+            ],
+        });
+        return;
+    }
+
+    switch (subcommand) {
         case 'add':
-            Scam.add({
-                value: link,
-                guild_id: main_interaction.guild.id,
-                guild_name: main_interaction.guild.name,
-                bot,
-                author: main_interaction.user,
-            })
+            new Scam()
+                .add({
+                    value: link,
+                    guild_id: main_interaction.guild.id,
+                    guild_name: main_interaction.guild.name,
+                    bot,
+                    author: main_interaction.user,
+                })
                 .then((res) => {
                     return main_interaction
                         .reply({
@@ -54,13 +70,14 @@ module.exports.run = async ({ main_interaction, bot }) => {
             break;
 
         case 'remove':
-            Scam.remove({
-                value: link,
-                guild_id: main_interaction.guild.id,
-                guild_name: main_interaction.guild.name,
-                bot,
-                author: main_interaction.user,
-            })
+            new Scam()
+                .remove({
+                    value: link,
+                    guild_id: main_interaction.guild.id,
+                    guild_name: main_interaction.guild.name,
+                    bot,
+                    author: main_interaction.user,
+                })
                 .then((res) => {
                     return main_interaction
                         .reply({
@@ -79,11 +96,12 @@ module.exports.run = async ({ main_interaction, bot }) => {
                 });
             break;
         case 'view':
-            Scam.view({
-                value: link,
-                channel: main_interaction.channel,
-                author: main_interaction.user,
-            })
+            new Scam()
+                .view({
+                    value: link,
+                    channel: main_interaction.channel,
+                    author: main_interaction.user,
+                })
                 .then((res) => {
                     return main_interaction
                         .reply({

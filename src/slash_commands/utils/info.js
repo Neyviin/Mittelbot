@@ -1,7 +1,7 @@
 const { EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder } = require('discord.js');
 const { version } = require('../../../package.json');
-const { MemberInfo } = require('../../../utils/functions/data/MemberInfo');
-const { errorhandler } = require('../../../utils/functions/errorhandler/errorhandler');
+const MemberInfo = require('~utils/classes/MemberInfo');
+const { errorhandler } = require('~utils/functions/errorhandler/errorhandler');
 const { infoConfig } = require('../_config/utils/info');
 
 module.exports.run = async ({ main_interaction, bot }) => {
@@ -92,7 +92,7 @@ module.exports.run = async ({ main_interaction, bot }) => {
                         new ButtonBuilder()
                             .setStyle(ButtonStyle.Link)
                             .setLabel('Add the bot to your server')
-                            .setURL(`https://mittelbot.blackdayz.de/invite`)
+                            .setURL(`https://mittelbot.xyz/invite`)
                     ),
                 ],
                 ephemeral: true,
@@ -101,7 +101,7 @@ module.exports.run = async ({ main_interaction, bot }) => {
                 errorhandler({ err });
             });
     }
-    const memberInfo = await MemberInfo.get({
+    const memberInfo = await new MemberInfo().get({
         guild_id: main_interaction.guild.id,
         user_id: user.id,
     });
@@ -152,7 +152,7 @@ module.exports.run = async ({ main_interaction, bot }) => {
         ])
         .setTimestamp();
 
-    if (JSON.parse(process.env.DEBUG)) console.info('info command passed!');
+    if (process.env.NODE_ENV === 'development') console.info('info command passed!');
 
     const axios = require('axios');
     const pfp = axios

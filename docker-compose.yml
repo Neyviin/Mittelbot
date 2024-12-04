@@ -3,27 +3,36 @@ version: '3.9'
 volumes:
     mysql:
 
+networks:
+    app:
+        driver: bridge
+
 services:
     bot:
+        image: node:20.9
+        working_dir: /app
         container_name: mittelbot
-        build:
-            context: .
-            dockerfile: Dockerfile
         restart: unless-stopped
         environment:
-            - NODE_ENV=development
-        links:
-            - mysql
+            - TZ=Europe/Berlin
         env_file:
-            - .env
+            - ./.env
         volumes:
             - .:/app
         ports:
             - 5000:5000
+        command: >
+            sh -c 'if [ "$NODE_ENV" = "development" ]; then
+                    npm install -g nodemon && npm install && npm run alias-build && ls -la /app/bot/core && nodemon ./bot/core/shard.js
+                else 
+                    npm install --omit=dev && npm run alias-build && node bot/core/shard.js
+                fi'
+        networks:
+            - app
 
     mysql:
         container_name: mittelbot-mysql
-        image: mysql:5.7
+        image: mysql:8.2
         environment:
             - MYSQL_ROOT_PASSWORD=root
             - MYSQL_DATABASE=mittelbot
@@ -31,7 +40,7 @@ services:
             - MYSQL_PASSWORD=root
             - MYSQL_PORT=3306
         env_file:
-            - .env
+            - ./.env
         volumes:
             - mysql:/var/lib/mysql
         ports:
@@ -44,6 +53,8 @@ services:
             test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost']
             timeout: 5s
             retries: 10
+        networks:
+            - app
 
     mysql-backup:
         image: fradelg/mysql-cron-backup
@@ -62,3 +73,5 @@ services:
             - TIMEOUT=10s
             - INIT_BACKUP=1
             - MAX_BACKUPS=7
+        networks:
+            - app

@@ -10,11 +10,19 @@ module.exports.languageConfig = new SlashCommandBuilder()
             .setRequired(true)
             .addChoices({
                 name: 'English',
-                value: 'en_EN',
+                value: 'en_US',
             })
             .addChoices({
                 name: 'German',
                 value: 'de_DE',
+            })
+            .addChoices({
+                name: 'Hungarian',
+                value: 'hu_HU',
+            })
+            .addChoices({
+                name: 'Polish',
+                value: 'pl_PL',
             })
     );
 

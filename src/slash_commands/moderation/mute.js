@@ -1,8 +1,8 @@
-const { checkTarget } = require('../../../utils/functions/checkMessage/checkMessage');
-const { hasPermission } = require('../../../utils/functions/hasPermissions');
-const { getModTime } = require('../../../utils/functions/getModTime');
-const { muteUser } = require('../../../utils/functions/moderations/muteUser');
-const { isMuted } = require('../../../utils/functions/moderations/checkOpenInfractions');
+const { checkTarget } = require('~utils/functions/checkMessage/checkMessage');
+const { hasPermission } = require('~utils/functions/hasPermissions');
+const { getModTime } = require('~utils/functions/getModTime');
+const { muteUser } = require('~utils/functions/moderations/muteUser');
+const { isMuted } = require('~utils/functions/moderations/checkOpenInfractions');
 const { muteConfig, mutePerms } = require('../_config/moderation/mute');
 const { EmbedBuilder } = require('discord.js');
 
@@ -36,7 +36,10 @@ module.exports.run = async ({ main_interaction, bot }) => {
                 embeds: [
                     new EmbedBuilder()
                         .setDescription(
-                            global.t.trans(['error.mute.alreadyMuted'], main_interaction.guild.id)
+                            global.t.trans(
+                                ['error.moderation.mute.alreadyMuted'],
+                                main_interaction.guild.id
+                            )
                         )
                         .setColor(global.t.trans(['general.colors.error'])),
                 ],

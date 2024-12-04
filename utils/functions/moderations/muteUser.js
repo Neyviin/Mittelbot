@@ -1,14 +1,14 @@
-const { setNewModLogMessage } = require('../../modlog/modlog');
-const { privateModResponse } = require('../../privatResponses/privateModResponses');
-const { publicModResponses } = require('../../publicResponses/publicModResponses');
+const { setNewModLogMessage } = require('../modlog/modlog');
+const { privateModResponse } = require('~utils/functions/privatResponses/privateModResponses');
+const { publicModResponses } = require('~utils/functions/publicResponses/publicModResponses');
 const { createInfractionId } = require('../createInfractionId');
 const { errorhandler } = require('../errorhandler/errorhandler');
 const { getFutureDate } = require('../getFutureDate');
 const { getAllRoles } = require('../roles/getAllRoles');
 const { getMutedRole } = require('../roles/getMutedRole');
 const { removeAllRoles } = require('../roles/removeAllRoles');
-const config = require('../../../src/assets/json/_config/config.json');
-const { Infractions } = require('../data/Infractions');
+const config = require('~assets/json/_config/config.json');
+const Infractions = require('~utils/classes/Infractions');
 
 async function muteUser({ user, mod, bot, guild, reason, time, dbtime }) {
     return new Promise(async (resolve, reject) => {
@@ -18,7 +18,11 @@ async function muteUser({ user, mod, bot, guild, reason, time, dbtime }) {
         const mutedRole = await getMutedRole(guild);
 
         if (!mutedRole) {
-            errorhandler({ err, fatal: false, message: `${mutedRole} is not a valid Muted Role.` });
+            errorhandler({
+                fatal: false,
+                message: `${mutedRole} is not a valid Muted Role.`,
+                id: 1694433644,
+            });
             return reject(
                 global.t.trans(['error.moderation.mute.noMuteRoleFoundOrCreated'], guild.id)
             );
@@ -35,9 +39,9 @@ async function muteUser({ user, mod, bot, guild, reason, time, dbtime }) {
                 }
 
                 errorhandler({
-                    err,
                     fatal: false,
-                    message: `${mutedRole} is not a valid Muted Role in ${guild.id}`,
+                    message: `${mutedRole} is not a valid Muted Role in ${guild.id} - ${err.message}`,
+                    id: 1694433593,
                 });
                 return reject(
                     global.t.trans(
@@ -54,7 +58,7 @@ async function muteUser({ user, mod, bot, guild, reason, time, dbtime }) {
         if (user_roles.length !== 0) await removeAllRoles(guild_user);
 
         try {
-            Infractions.insertOpen({
+            new Infractions().insertOpen({
                 uid: user.id,
                 modid: mod.id || mod,
                 mute: 1,
@@ -97,11 +101,12 @@ async function muteUser({ user, mod, bot, guild, reason, time, dbtime }) {
             errorhandler({
                 fatal: false,
                 message: `${mod.id} has triggered the mute command in ${guild.id}`,
+                id: 1694433658,
             });
 
             return resolve(p_response);
         } catch (err) {
-            errorhandler({ err, fatal: true });
+            errorhandler({ err });
             return reject(global.t.trans(['error.general'], guild.id));
         }
     });

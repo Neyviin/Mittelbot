@@ -1,5 +1,5 @@
-const config = require('../../../src/assets/json/_config/config.json');
-const { GuildConfig } = require('../../../utils/functions/data/Config');
+const config = require('~assets/json/_config/config.json');
+const GuildConfig = require('~utils/classes/Config');
 const { autoTranslateConfig, autotranslatePerms } = require('../_config/admin/autotranslate');
 const { EmbedBuilder } = require('discord.js');
 
@@ -15,11 +15,12 @@ module.exports.run = async ({ main_interaction, bot }) => {
         translate_log_channel,
     };
 
-    GuildConfig.update({
-        guild_id: main_interaction.guild.id,
-        value: newTranslateConfig,
-        valueName: 'translate',
-    })
+    new GuildConfig()
+        .update({
+            guild_id: main_interaction.guild.id,
+            value: newTranslateConfig,
+            valueName: 'translate',
+        })
         .then(() => {
             return main_interaction
                 .reply({
@@ -27,7 +28,7 @@ module.exports.run = async ({ main_interaction, bot }) => {
                         new EmbedBuilder()
                             .setDescription(
                                 global.t.trans(
-                                    ['success.autotranslate.update'],
+                                    ['success.admin.autotranslate.update'],
                                     main_interaction.guild.id
                                 )
                             )

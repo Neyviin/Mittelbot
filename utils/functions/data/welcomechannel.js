@@ -1,25 +1,30 @@
-const { ActionRowBuilder, EmbedBuilder, StringSelectMenuBuilder } = require('discord.js');
-const { delay } = require('../delay/delay');
+const { ActionRowBuilder, EmbedBuilder, StringSelectMenuBuilder, Embed } = require('discord.js');
+const { delay } = require('../delay');
 const isURI = require('@stdlib/assert-is-uri');
 const { isValidHexCode } = require('../validate/isValidHexCode');
 const { validateCustomStrings } = require('../validate/validateCustomStrings');
-const { GuildConfig } = require('./Config');
+const GuildConfig = require('~utils/classes/Config');
 const { defaultWelcomeMessage } = require('./variables');
 const { errorhandler } = require('../errorhandler/errorhandler');
 
-module.exports.updateWelcomeSettings = async ({ guild_id, valueName, value }) => {
+module.exports.updateWelcomeSettings = async ({ guild_id, valueName, value, remove = false }) => {
     return new Promise(async (resolve, reject) => {
-        const welcomeSettings = await this.getWelcomechannel({
+        let welcomeSettings = await this.getWelcomechannel({
             guild_id,
         });
 
-        welcomeSettings[valueName] = value;
+        if (remove) {
+            welcomeSettings = null;
+        } else {
+            welcomeSettings[valueName] = value;
+        }
 
-        return await GuildConfig.update({
-            guild_id,
-            value: welcomeSettings,
-            valueName: 'welcome_channel',
-        })
+        return await new GuildConfig()
+            .update({
+                guild_id,
+                value: welcomeSettings,
+                valueName: 'welcome_channel',
+            })
             .then(() => {
                 resolve(true);
             })
@@ -32,7 +37,7 @@ module.exports.updateWelcomeSettings = async ({ guild_id, valueName, value }) =>
 //=========================================================
 
 module.exports.getWelcomechannel = async ({ guild_id }) => {
-    const guildConfig = await GuildConfig.get(guild_id);
+    const guildConfig = await new GuildConfig().get(guild_id);
     return guildConfig && guildConfig.welcome_channel
         ? guildConfig.welcome_channel
         : defaultWelcomeMessage;
@@ -65,7 +70,7 @@ module.exports.manageNewWelcomeSetting = async ({ main_interaction }) => {
                     }),
                 ]).then(async (res) => {
                     await delay(1000);
-                    res[0].delete().catch((err) => {});
+                    res[0].delete().catch(() => {});
                     await main_interaction.message.react('✅').catch((err) => {});
                 });
             } catch (err) {
@@ -106,12 +111,10 @@ module.exports.manageNewWelcomeSetting = async ({ main_interaction }) => {
             } else if (message.content.toLowerCase() === 'clear') {
                 isClear = true;
                 data[value] = '';
-            } else {
-                pass = true;
             }
 
             data[value] = message.content;
-            message.delete().catch((err) => {});
+            message.delete().catch(() => {});
 
             const messageEmbed = main_interaction.message.embeds[0].data;
             switch (value) {
@@ -485,42 +488,37 @@ module.exports.sendWelcomeMessage = async ({ guild_id, bot, joined_user }, isTes
             joined_user,
         });
 
+        let sendObject = {};
+        if (welcomeChannel instanceof Embed) {
+            sendObject = {
+                content: cleanedMessage,
+                embeds: [welcomeChannel],
+            };
+        } else {
+            sendObject = {
+                content: cleanedMessage,
+            };
+        }
+
         return await bot.guilds.cache
             .get(guild_id)
             .channels.cache.get(welcomeChannel.id)
-            .send({
-                content: cleanedMessage,
-                embeds: [welcomeMessage],
-            })
+            .send(sendObject)
             .then((msg) => {
                 errorhandler({
                     message: `✅ I have successfully send a welcome message in Guild: ${joined_user.guild.id}`,
                     fatal: false,
+                    id: 1694433443,
                 });
                 resolve(msg);
             })
-            .catch(async () => {
-                await bot.guilds.cache
-                    .get(guild_id)
-                    .channels.cache.get(welcomeChannel.id)
-                    .send({
-                        content: cleanedMessage,
-                    })
-                    .then((msg) => {
-                        errorhandler({
-                            message: `✅ I have successfully send a welcome message in Guild: ${joined_user.guild.id}. ❌ But the embed failed.`,
-                            fatal: false,
-                        });
-                        resolve(msg);
-                    })
-                    .catch((err) => {
-                        errorhandler({
-                            message: `❌ I have failed to send a welcome message in Guild: ${joined_user.guild.id}`,
-                            err: err.toString(),
-                            fatal: false,
-                        });
-                        reject(err);
-                    });
+            .catch(async (err) => {
+                errorhandler({
+                    message: `❌ I have failed to send a welcome message in Guild: ${joined_user.guild.id} - ${err.message}`,
+                    fatal: false,
+                    id: 1694433448,
+                });
+                reject(err);
             });
     });
 };

@@ -1,4 +1,4 @@
-const Modules = require('../../../utils/functions/data/Modules');
+const Modules = require('~utils/classes/Modules');
 const { EmbedBuilder } = require('discord.js');
 const { modulesConfig, modulesPerms } = require('../_config/admin/modules');
 
@@ -82,7 +82,7 @@ module.exports.run = async ({ main_interaction, bot }) => {
                             .setDescription(
                                 global.t.trans(
                                     [
-                                        'success.modules.update',
+                                        'success.admin.modules.update',
                                         status === 'activate' ? 'activated' : 'disabled',
                                         requestedModule[0].toUpperCase() + requestedModule.slice(1),
                                     ],

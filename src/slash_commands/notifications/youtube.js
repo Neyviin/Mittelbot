@@ -1,8 +1,8 @@
 const { EmbedBuilder } = require('discord.js');
-const { changeYtNotifier, delYTChannelFromList } = require('../../../utils/functions/data/youtube');
+const { changeYtNotifier, delYTChannelFromList } = require('~utils/functions/data/youtube');
 const { youtubeConfig, youtubePerms } = require('../_config/notifications/youtube');
 
-module.exports.run = async ({ main_interaction, bot }) => {
+module.exports.run = async ({ main_interaction }) => {
     await main_interaction.deferReply({
         ephemeral: true,
     });
@@ -32,20 +32,18 @@ module.exports.run = async ({ main_interaction, bot }) => {
                 });
             });
     } else {
+        const ytchannel = main_interaction.options.getString('ytchannel');
+
         delYTChannelFromList({
             guild_id: main_interaction.guild.id,
+            ytchannel: ytchannel,
         })
-            .then(async () => {
+            .then(async (res) => {
                 await main_interaction
                     .followUp({
                         embeds: [
                             new EmbedBuilder()
-                                .setDescription(
-                                    global.t.trans(
-                                        ['success.notifications.youtube.removed', ytchannel],
-                                        main_interaction.guild.id
-                                    )
-                                )
+                                .setDescription(res)
                                 .setColor(global.t.trans(['general.colors.success'])),
                         ],
                         ephemeral: true,

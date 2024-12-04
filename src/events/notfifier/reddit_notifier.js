@@ -1,6 +1,6 @@
 const axios = require('axios');
-const Reddit = require('../../../utils/functions/data/Reddit');
-const { errorhandler } = require('../../../utils/functions/errorhandler/errorhandler');
+const Reddit = require('~utils/classes/Reddit');
+const { errorhandler } = require('~utils/functions/errorhandler/errorhandler');
 const { EmbedBuilder } = require('discord.js');
 
 const ignoreErroCodes = ['EAI_AGAIN', 'ECONNRESET', 'ECONNREFUSED', 'EHOSTUNREACH', 'EPIPE'];
@@ -34,7 +34,6 @@ module.exports.reddit_notifier = async (bot) => {
             const {
                 title,
                 url,
-                hidden,
                 selftext,
                 over_18,
                 permalink,
@@ -113,11 +112,11 @@ module.exports.reddit_notifier = async (bot) => {
                 })
                 .catch((err) => {
                     errorhandler({
-                        message: 'Error sending reddit post',
-                        err: err.message,
+                        message: `Error sending reddit post ${err.message}`,
                         fatal: false,
+                        id: 1694432662,
                     });
                 });
         });
-    }, 1000 * 15); // 15 seconds
+    }, 1000 * 60); // 15 seconds
 };

@@ -1,11 +1,10 @@
-const config = require('../../../src/assets/json/_config/config.json');
-const { Levelsystem } = require('../../../utils/functions/data/levelsystemAPI');
-const { GuildConfig } = require('../../../utils/functions/data/Config');
+const Levelsystem = require('~utils/classes/levelsystemAPI');
+const GuildConfig = require('~utils/classes/Config');
 const { levelSettingsConfig, levelsettingsPerms } = require('../_config/admin/levelsettings');
 const { EmbedBuilder } = require('discord.js');
 
 module.exports.run = async ({ main_interaction, bot }) => {
-    const guildConfig = await GuildConfig.get(main_interaction.guild.id);
+    const guildConfig = await new GuildConfig().get(main_interaction.guild.id);
     let levelsettings = guildConfig.levelsettings;
 
     switch (main_interaction.options.getSubcommand()) {
@@ -13,18 +12,19 @@ module.exports.run = async ({ main_interaction, bot }) => {
             const mode = main_interaction.options.getString('mode');
             levelsettings.mode = mode;
 
-            return await GuildConfig.update({
-                guild_id: main_interaction.guild.id,
-                value: levelsettings,
-                valueName: 'levelsettings',
-            })
+            return await new GuildConfig()
+                .update({
+                    guild_id: main_interaction.guild.id,
+                    value: levelsettings,
+                    valueName: 'levelsettings',
+                })
                 .then((res) => {
                     return main_interaction.reply({
                         embeds: [
                             new EmbedBuilder()
                                 .setDescription(
                                     global.t.trans(
-                                        ['success.levelsettings.set', mode],
+                                        ['success.admin.levelsettings.set', mode],
                                         main_interaction.guild.id
                                     )
                                 )
@@ -39,7 +39,7 @@ module.exports.run = async ({ main_interaction, bot }) => {
                             new EmbedBuilder()
                                 .setDescription(
                                     global.t.trans(
-                                        ['error.levelsettings.set', mode],
+                                        ['error.admin.levelsettings.set', mode],
                                         main_interaction.guild.id
                                     )
                                 )
@@ -77,11 +77,12 @@ module.exports.run = async ({ main_interaction, bot }) => {
                 }
             }
 
-            GuildConfig.update({
-                guild_id: main_interaction.guild.id,
-                value: levelsettings,
-                valueName: 'levelsettings',
-            })
+            new GuildConfig()
+                .update({
+                    guild_id: main_interaction.guild.id,
+                    value: levelsettings,
+                    valueName: 'levelsettings',
+                })
                 .then(() => {
                     return main_interaction.reply({
                         embeds: [
@@ -103,7 +104,7 @@ module.exports.run = async ({ main_interaction, bot }) => {
                             new EmbedBuilder()
                                 .setDescription(
                                     global.t.trans(
-                                        ['error.levelsettings.setAlone'],
+                                        ['error.admin.levelsettings.setAlone'],
                                         main_interaction.guild.id
                                     )
                                 )
@@ -118,11 +119,12 @@ module.exports.run = async ({ main_interaction, bot }) => {
             const type = main_interaction.options.getString('type');
             const channel = main_interaction.options.getChannel('channel');
 
-            Levelsystem.changeLevelUp({
-                type,
-                guild: main_interaction.guild,
-                channel,
-            })
+            new Levelsystem()
+                .changeLevelUp({
+                    type,
+                    guild: main_interaction.guild,
+                    channel,
+                })
                 .then((res) => {
                     return main_interaction
                         .reply({

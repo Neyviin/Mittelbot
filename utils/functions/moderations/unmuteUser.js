@@ -1,12 +1,12 @@
-const { setNewModLogMessage } = require('../../modlog/modlog');
-const { privateModResponse } = require('../../privatResponses/privateModResponses');
-const { publicModResponses } = require('../../publicResponses/publicModResponses');
-const { errorhandler } = require('../errorhandler/errorhandler');
-const { getMutedRole } = require('../roles/getMutedRole');
-const { giveAllRoles } = require('../roles/giveAllRoles');
-const config = require('../../../src/assets/json/_config/config.json');
-const { Infractions } = require('../data/Infractions');
-const openInfractions = require('../../../src/db/Models/tables/open_infractions.model');
+const { setNewModLogMessage } = require('~utils/functions/modlog/modlog');
+const { privateModResponse } = require('~utils/functions/privatResponses/privateModResponses');
+const { publicModResponses } = require('~utils/functions/publicResponses/publicModResponses');
+const { errorhandler } = require('~utils/functions/errorhandler/errorhandler');
+const { getMutedRole } = require('~utils/functions/roles/getMutedRole');
+const { giveAllRoles } = require('~utils/functions/roles/giveAllRoles');
+const config = require('~assets/json/_config/config.json');
+const Infractions = require('~utils/classes/Infractions');
+const openInfractions = require('~src/db/Models/open_infractions.model');
 
 async function unmuteUser({ user, bot, mod, reason, guild }) {
     const userGuild = await bot.guilds.cache.get(guild.id);
@@ -50,11 +50,10 @@ async function unmuteUser({ user, bot, mod, reason, guild }) {
         .catch((err) => {
             errorhandler({
                 err,
-                fatal: true,
             });
             return {
                 error: true,
-                message: config.errormessages.general,
+                message: global.t.trans(['error.general'], guild.id),
             };
         });
 
@@ -72,14 +71,13 @@ async function unmuteUser({ user, bot, mod, reason, guild }) {
             null,
             userGuild.id
         );
-        await privateModResponse(
-            user,
-            config.defaultModTypes.unmute,
+        await privateModResponse({
+            member: user,
+            type: config.defaultModTypes.unmute,
             reason,
-            null,
             bot,
-            userGuild.name
-        );
+            guildname: userGuild.name,
+        });
         const p_response = await publicModResponses(
             config.defaultModTypes.unmute,
             mod,
@@ -123,13 +121,13 @@ async function unmuteUser({ user, bot, mod, reason, guild }) {
                     errorhandler({
                         fatal: false,
                         message: `${mod.id} has triggered the unmute command in ${guild.id}`,
+                        id: 1694433689,
                     });
                 }
             })
             .catch((err) => {
                 errorhandler({
                     err,
-                    fatal: true,
                 });
             });
 

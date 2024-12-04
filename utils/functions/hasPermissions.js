@@ -1,5 +1,5 @@
 const { PermissionFlagsBits } = require('discord.js');
-const { GuildConfig } = require('./data/Config');
+const GuildConfig = require('~utils/classes/Config');
 const { errorhandler } = require('./errorhandler/errorhandler');
 
 module.exports.hasPermission = async ({
@@ -18,7 +18,7 @@ module.exports.hasPermission = async ({
         return true;
     }
 
-    const { modroles } = await GuildConfig.get(guild_id);
+    const { modroles } = await new GuildConfig().get(guild_id);
     const hasPermission = modroles.some(({ role, isAdmin, isMod, isHelper }) =>
         this.checkPerms({
             role_id: role,
@@ -29,6 +29,7 @@ module.exports.hasPermission = async ({
             isDashboard,
             modOnly,
             adminOnly,
+            bot,
         })
     );
 
@@ -36,6 +37,7 @@ module.exports.hasPermission = async ({
         errorhandler({
             fatal: false,
             message: `${guildUser.id} has tried a command with no permission in ${guild_id}`,
+            id: 1694433429,
         });
     }
 
@@ -51,6 +53,7 @@ module.exports.checkPerms = ({
     isDashboard,
     adminOnly,
     modOnly,
+    bot,
 }) => {
     const userHasRole = isDashboard
         ? bot.guilds.cache.get(guild_id).members.cache.get(user).roles.cache.has(role_id)
@@ -59,7 +62,7 @@ module.exports.checkPerms = ({
     if (
         !userHasRole ||
         (adminOnly && roleIsMod) ||
-        (modOnly && roleIsHelper) ||
+        ((modOnly || adminOnly) && roleIsHelper) ||
         (!roleIsAdmin && !roleIsMod && !roleIsHelper)
     ) {
         return false;

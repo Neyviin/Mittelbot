@@ -1,6 +1,6 @@
 const { EmbedBuilder, AttachmentBuilder } = require('discord.js');
 const { readFile } = require('fs/promises');
-const { delay } = require('../../../utils/functions/delay/delay');
+const { delay } = require('~utils/functions/delay');
 const Canvas = require('@napi-rs/canvas');
 const { request } = require('undici');
 const { shipConfig } = require('../_config/fun/ship');
@@ -15,7 +15,7 @@ module.exports.run = async ({ main_interaction, bot }) => {
                     new EmbedBuilder()
                         .setDescription(
                             global.t.trans(
-                                ['error.ship.cannotShip', 'yourself'],
+                                ['error.fun.ship.cannotShip', 'yourself'],
                                 main_interaction.guild.id
                             )
                         )
@@ -31,7 +31,7 @@ module.exports.run = async ({ main_interaction, bot }) => {
                     new EmbedBuilder()
                         .setDescription(
                             global.t.trans(
-                                ['error.ship.cannotShip', 'bots'],
+                                ['error.fun.ship.cannotShip', 'bots'],
                                 main_interaction.guild.id
                             )
                         )
@@ -52,20 +52,36 @@ module.exports.run = async ({ main_interaction, bot }) => {
         })
         .catch((err) => {});
 
-    const ship = Math.floor(Math.random() * 100);
+    const ship = Math.floor(Math.random() * 100) + 1;
 
-    const quotes = global.t.trans(['info.ship.quotes'], main_interaction.guild.id);
+    const generateQuote = () => {
+        const quotes = global.t.trans(['info.fun.ship.quotes'], main_interaction.guild.id);
 
-    let quote = '';
-    if (ship >= 70) {
-        quote = quotes[0]['100_70'][Math.floor(Math.random() * quotes[0]['100_70'].length)];
-    } else if (ship >= 40) {
-        quote = quotes[0]['69_40'][Math.floor(Math.random() * quotes[0]['69_40'].length)];
-    } else if (ship >= 10) {
-        quote = quotes[0]['39_10'][Math.floor(Math.random() * quotes[0]['39_10'].length)];
-    } else {
-        quote = quotes[0]['9_0'][Math.floor(Math.random() * quotes[0]['9_0'].length)];
-    }
+        try {
+            if (ship >= 70) {
+                return quotes[0]['100_70'][Math.floor(Math.random() * quotes[0]['100_70'].length)];
+            } else if (ship >= 40) {
+                return quotes[0]['69_40'][Math.floor(Math.random() * quotes[0]['69_40'].length)];
+            } else if (ship >= 10) {
+                return quotes[0]['39_10'][Math.floor(Math.random() * quotes[0]['39_10'].length)];
+            } else {
+                return quotes[0]['9_0'][Math.floor(Math.random() * quotes[0]['9_0'].length)];
+            }
+        } catch (err) {
+            return null;
+        }
+    };
+
+    let quote;
+    let tries = 0;
+    do {
+        quote = generateQuote();
+        tries++;
+        if (tries > 10) {
+            quote = '';
+            break;
+        }
+    } while (quote === null);
 
     const canvas = Canvas.createCanvas(950, 550);
     const context = canvas.getContext('2d');
@@ -103,7 +119,13 @@ module.exports.run = async ({ main_interaction, bot }) => {
 
     const newEmbed = new EmbedBuilder().setDescription(
         global.t.trans(
-            ['success.ship.showResult', user.username, main_interaction.user.username, ship, quote],
+            [
+                'success.fun.ship.showResult',
+                user.username,
+                main_interaction.user.username,
+                ship,
+                quote,
+            ],
             main_interaction.guild.id
         )
     );

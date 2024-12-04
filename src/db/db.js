@@ -1,7 +1,7 @@
 const { Sequelize } = require('sequelize');
 const fs = require('fs');
 const path = require('path');
-const { errorhandler } = require('../../utils/functions/errorhandler/errorhandler');
+const { errorhandler } = require('~utils/functions/errorhandler/errorhandler');
 const SequelizeModel = require('sequelize/lib/model');
 require('dotenv').config();
 
@@ -11,7 +11,8 @@ const database = new Sequelize(
     process.env.DB_PASSWORD,
     {
         host: process.env.DB_HOST,
-        dialect: 'mysql',
+        port: process.env.DB_PORT || 3306,
+        dialect: process.env.DB_DIALECT || 'mysql',
         logging: false,
         pool: {
             max: 5,
@@ -74,10 +75,10 @@ SequelizeModel.destroy = function () {
 
 database.init = () => {
     return new Promise(async (resolve, reject) => {
-        const dir = path.resolve('src/db/Models/tables/');
         await database
             .authenticate()
             .then(() => {
+                const dir = path.resolve('./src/db/Models/');
                 fs.readdirSync(dir).forEach((file) => {
                     console.info('Loading model: ' + file);
                     require(path.join(dir, file));
@@ -94,7 +95,7 @@ database.init = () => {
             alter: true,
         });
 
-        const data_mg_path = path.resolve('src/db/data_migration/');
+        const data_mg_path = path.resolve('./src/db/data_migration/');
         fs.readdirSync(data_mg_path).forEach((file) => {
             if (!file.includes('.default')) return;
             console.info('Loading data migration: ' + file);

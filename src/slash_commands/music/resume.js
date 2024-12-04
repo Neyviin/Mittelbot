@@ -1,5 +1,5 @@
 const { EmbedBuilder } = require('discord.js');
-const Music = require('../../../utils/functions/data/Music');
+const Music = require('~utils/classes/Music');
 const { resumeData } = require('../_config/music/resume');
 
 module.exports.run = async ({ main_interaction, bot }) => {
@@ -9,10 +9,10 @@ module.exports.run = async ({ main_interaction, bot }) => {
         ephemeral: true,
     });
 
-    const check = await musicApi.checkAvailibility();
-    if (check) {
+    const isNotAvailable = await musicApi.checkAvailibility();
+    if (isNotAvailable) {
         return main_interaction.followUp({
-            embeds: [new EmbedBuilder().setColor('#ff0000').setDescription(check)],
+            embeds: [new EmbedBuilder().setColor('#ff0000').setDescription(isNotAvailable)],
             ephemeral: true,
         });
     }
@@ -32,7 +32,7 @@ module.exports.run = async ({ main_interaction, bot }) => {
                 ],
                 ephemeral: true,
             })
-            .catch((err) => {});
+            .catch(() => {});
 
         await musicApi.pause();
         return;
@@ -50,7 +50,7 @@ module.exports.run = async ({ main_interaction, bot }) => {
                 ],
                 ephemeral: true,
             })
-            .catch((err) => {});
+            .catch(() => {});
     }
 
     await musicApi.resume();

@@ -1,13 +1,13 @@
-const { setNewModLogMessage } = require('../../modlog/modlog');
-const { privateModResponse } = require('../../privatResponses/privateModResponses');
-const { publicModResponses } = require('../../publicResponses/publicModResponses');
-const { createInfractionId } = require('../createInfractionId');
-const { errorhandler } = require('../errorhandler/errorhandler');
-const { getFutureDate } = require('../getFutureDate');
-const config = require('../../../src/assets/json/_config/config.json');
-const { Infractions } = require('../data/Infractions');
-const Banappeal = require('../data/Banappeal');
-const Modules = require('../data/Modules');
+const { setNewModLogMessage } = require('~utils/functions/modlog/modlog');
+const { privateModResponse } = require('~utils/functions/privatResponses/privateModResponses');
+const { publicModResponses } = require('~utils/functions/publicResponses/publicModResponses');
+const { createInfractionId } = require('~utils/functions/createInfractionId');
+const { errorhandler } = require('~utils/functions/errorhandler/errorhandler');
+const { getFutureDate } = require('~utils/functions/getFutureDate');
+const config = require('~assets/json/_config/config.json');
+const Infractions = require('~utils/classes/Infractions');
+const Banappeal = require('~utils/classes/Banappeal');
+const Modules = require('~utils/classes/Modules');
 
 async function banUser({ user, mod, guild, reason, bot, dbtime, time, isAuto }) {
     return new Promise(async (resolve, reject) => {
@@ -42,10 +42,10 @@ async function banUser({ user, mod, guild, reason, bot, dbtime, time, isAuto }) 
                 if (err.status !== 403 && err.status !== 404) {
                     errorhandler({ err });
                 }
-                return reject(config.errormessages.nopermissions.ban);
+                return reject(global.t.trans(['error.permissions.bot.ban'], guild.id));
             });
 
-        Infractions.insertOpen({
+        new Infractions().insertOpen({
             uid: user.id || user,
             modid: mod.id,
             ban: 1,
@@ -76,6 +76,7 @@ async function banUser({ user, mod, guild, reason, bot, dbtime, time, isAuto }) 
         errorhandler({
             fatal: false,
             message: `${mod.id} has triggered the ban command in ${guild.id}`,
+            id: 1694433512,
         });
 
         return resolve(p_response);

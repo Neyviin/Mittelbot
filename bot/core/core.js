@@ -1,18 +1,18 @@
-const { checkInfractions } = require('../../src/events/checkInfraction');
-const { checkTemproles } = require('../../src/events/checkTemproles');
-const { twitch_notifier } = require('../../src/events/notfifier/twitch_notifier');
+const { checkInfractions } = require('~src/events/checkInfraction');
+const { checkTemproles } = require('~src/events/checkTemproles');
+const { twitch_notifier } = require('~src/events/notfifier/twitch_notifier');
 const {
     createSlashCommands,
     loadCommandList,
-} = require('../../utils/functions/createSlashCommands/createSlashCommands');
-const { setActivity } = require('../../utils/functions/data/activity');
-const database = require('../../src/db/db');
-const { Guilds } = require('../../utils/functions/data/Guilds');
-const { reddit_notifier } = require('../../src/events/notfifier/reddit_notifier');
-const { timer } = require('../../src/events/timer/timer');
+} = require('~utils/functions/createSlashCommands/createSlashCommands');
+const { setActivity } = require('~utils/functions/activity');
+const database = require('~src/db/db');
+const Guilds = require('~utils/classes/Guilds');
+const { reddit_notifier } = require('~src/events/notfifier/reddit_notifier');
+const { timer } = require('~src/events/timer/timer');
 const logs = require('discord-logs');
-const Music = require('../../utils/functions/data/Music');
-const YouTubeNotification = require('../../utils/functions/data/Notifications/YouTube/YouTubeNotification');
+const Music = require('~utils/classes/Music');
+const YouTubeNotification = require('~utils/classes/Notifications/YouTube/YouTubeNotification');
 
 module.exports.startBot = async (bot) => {
     return new Promise(async (resolve, reject) => {
@@ -21,7 +21,7 @@ module.exports.startBot = async (bot) => {
             await database.init();
             await setActivity(bot, true);
             await Promise.resolve(this.fetchCache(bot));
-            await bot.player.extractors.loadDefault();
+            //await bot.player.extractors.loadDefault();
             new Music(null, bot, true).generateQueueAfterRestart();
 
             /**
@@ -39,7 +39,8 @@ module.exports.startBot = async (bot) => {
                 ----END ----
             */
 
-            bot.commands = (await loadCommandList(bot)).cmd;
+            const botList = await loadCommandList(bot);
+            bot.commands = botList.cmd;
 
             setActivity(bot);
             if (process.env.NODE_ENV === 'production') {
@@ -104,7 +105,7 @@ module.exports.fetchUsers = async (bot, guilds) => {
 module.exports.checkGuildsInDatabase = async (guilds) => {
     return new Promise(async (resolve) => {
         await guilds.map(async (guild) => {
-            Guilds.create(guild.id).catch(() => {});
+            new Guilds().create(guild.id).catch(() => {});
         });
         resolve(true);
     });

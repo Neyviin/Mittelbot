@@ -1,5 +1,5 @@
 const { EmbedBuilder } = require('discord.js');
-const Music = require('../../../utils/functions/data/Music');
+const Music = require('~utils/classes/Music');
 const { nowplayingConfig } = require('../_config/music/nowplaying');
 
 module.exports.run = async ({ main_interaction, bot }) => {
@@ -10,6 +10,18 @@ module.exports.run = async ({ main_interaction, bot }) => {
     });
 
     const queue = await musicApi.getQueue();
+    if (!queue) {
+        return main_interaction.followUp({
+            embeds: [
+                new EmbedBuilder()
+                    .setDescription(
+                        global.t.trans(['error.music.nothingInQueue'], main_interaction.guild.id)
+                    )
+                    .setColor(global.t.trans(['general.colors.error'])),
+            ],
+            ephemeral: true,
+        });
+    }
 
     if ((await !musicApi.isPlaying()) || (await musicApi.isPaused()))
         return main_interaction.followUp({

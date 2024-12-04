@@ -1,0 +1,18 @@
+node_modules/
+mittelblot-db-backup/
+*.min.*
+*.bundle.*
+._*
+*bootstrap*
+*bootstrap*
+*vendor*
+.husky/
+*.md
+crowdin.yml
+
+<!-- TRANSLATION FILES -->
+de_DE.json
+en_US.json
+hu_HU.json
+pl_PL.json
+fr_FR.json

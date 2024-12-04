@@ -1,13 +1,7 @@
-const { PermissionFlagsBits } = require('discord.js');
-const {
-    sendWelcomeSetting,
-    updateWelcomeSettings,
-} = require('../../../utils/functions/data/welcomechannel');
-const { GuildConfig } = require('../../../utils/functions/data/Config');
-const config = require('../../../src/assets/json/_config/config.json');
+const GuildConfig = require('~utils/classes/Config');
 const { EmbedBuilder } = require('discord.js');
 const { settingsConfig, settingsPerms } = require('../_config/admin/settings');
-module.exports.run = async ({ main_interaction, bot }) => {
+module.exports.run = async ({ main_interaction }) => {
     await main_interaction.deferReply({
         ephemeral: true,
     });
@@ -19,29 +13,7 @@ module.exports.run = async ({ main_interaction, bot }) => {
                     content: 'This command is currenty disabled',
                     ephemeral: true,
                 })
-                .catch((err) => {});
-            break;
-
-        case 'welcomemessage':
-            await updateWelcomeSettings({
-                guild_id: main_interaction.guild.id,
-                valueName: 'id',
-                value: main_interaction.options.getChannel('channel').id,
-            })
-                .then(() => {
-                    sendWelcomeSetting({
-                        main_interaction,
-                    });
-                })
-                .catch((err) => {
-                    main_interaction
-                        .followUp({
-                            content: '❌ ' + err,
-                            ephemeral: true,
-                        })
-                        .catch((err) => {});
-                });
-            break;
+                .catch(() => {});
 
         case 'cooldown':
             const cooldown = main_interaction.options.getNumber('cooldown');
@@ -57,7 +29,7 @@ module.exports.run = async ({ main_interaction, bot }) => {
                             new EmbedBuilder()
                                 .setDescription(
                                     global.t.trans(
-                                        ['success.settings.cooldown.disabled'],
+                                        ['success.admin.settings.cooldown.disabled'],
                                         main_interaction.guild.id
                                     )
                                 )
@@ -65,7 +37,7 @@ module.exports.run = async ({ main_interaction, bot }) => {
                         ],
                         ephemeral: true,
                     })
-                    .catch((err) => {});
+                    .catch(() => {});
             } else {
                 await saveSetting({
                     value: cooldown * 1000,
@@ -77,7 +49,7 @@ module.exports.run = async ({ main_interaction, bot }) => {
                             new EmbedBuilder()
                                 .setDescription(
                                     global.t.trans(
-                                        ['success.settings.cooldown.set', cooldown],
+                                        ['success.admin.settings.cooldown.set', cooldown],
                                         main_interaction.guild.id
                                     )
                                 )
@@ -85,13 +57,13 @@ module.exports.run = async ({ main_interaction, bot }) => {
                         ],
                         ephemeral: true,
                     })
-                    .catch((err) => {});
+                    .catch(() => {});
             }
             break;
     }
 
     async function saveSetting({ value, valueName }) {
-        await GuildConfig.update({
+        await new GuildConfig().update({
             guild_id: main_interaction.guild.id,
             value,
             valueName,

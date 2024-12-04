@@ -1,7 +1,6 @@
-const defaultTranslations = require('../../../src/assets/json/translations/_default.json');
-const guildConfig = require('../../../src/db/Models/tables/guildConfig.model');
-const { GuildConfig } = require('../data/Config');
-const { errorhandler } = require('../errorhandler/errorhandler');
+const defaultTranslations = require('~assets/json/translations/en_US/en_US.json');
+const guildConfig = require('~src/db/Models/guildConfig.model');
+const { errorhandler } = require('~utils/functions/errorhandler/errorhandler');
 
 module.exports = class Translations {
     constructor() {
@@ -9,8 +8,8 @@ module.exports = class Translations {
     }
 
     #cache = new Map();
-    #defaultLanguage = 'en_EN';
-    #supportedLanguages = ['en_EN', 'de_DE'];
+    #defaultLanguage = 'en_US';
+    #supportedLanguages = ['en_US', 'de_DE', 'hu_HU', 'pl_PL'];
 
     translationTries = 0;
 
@@ -124,7 +123,7 @@ module.exports = class Translations {
 
     #getTranslationFile(language) {
         try {
-            return require(`../../../src/assets/json/translations/${language}.json`);
+            return require(`~assets/json/translations/${language}/${language}.json`);
         } catch (e) {
             return defaultTranslations;
         }

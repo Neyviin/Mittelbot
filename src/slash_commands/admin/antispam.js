@@ -1,12 +1,12 @@
 const { EmbedBuilder } = require('discord.js');
-const { Automod } = require('../../../utils/functions/data/Automod');
-const { errorhandler } = require('../../../utils/functions/errorhandler/errorhandler');
+const Automod = require('~utils/classes/Automod');
+const { errorhandler } = require('~utils/functions/errorhandler/errorhandler');
 const { antiSpamConfig, antiSpamPerms } = require('../_config/admin/antispam');
-const { removeMention } = require('../../../utils/functions/removeCharacters');
-const AutomodAntiSpam = require('../../../utils/functions/data/Automoderation/Automod-AntiSpam');
+const { removeMention } = require('~utils/functions/removeCharacters');
+const AutomodAntiSpam = require('~utils/classes/Automoderation/Automod-AntiSpam');
 
 module.exports.run = async ({ main_interaction, bot }) => {
-    const antiSpamSettings = await Automod.get(main_interaction.guild.id, 'antispam');
+    const antiSpamSettings = await new Automod().get(main_interaction.guild.id, 'antispam');
 
     const antiSpamEnabled = JSON.parse(main_interaction.options.getString('enabled'));
     const antiSpamAction = main_interaction.options.getString('action');
@@ -33,7 +33,7 @@ module.exports.run = async ({ main_interaction, bot }) => {
         if (setting.whitelistroles.includes(roleId)) {
             setting.whitelistroles.splice(setting.whitelistroles.indexOf(roleId), 1);
         } else {
-            if (parseInt(roleId)) {
+            if (parseInt(roleId, 10)) {
                 setting.whitelistroles.push(roleId);
             }
         }
@@ -44,27 +44,29 @@ module.exports.run = async ({ main_interaction, bot }) => {
         if (setting.whitelistchannels.includes(channelId)) {
             setting.whitelistchannels.splice(setting.whitelistchannels.indexOf(channelId), 1);
         } else {
-            if (!parseInt(channelId)) return;
+            if (!parseInt(channelId, 10)) return;
 
             setting.whitelistchannels.push(channelId);
         }
     });
 
-    Automod.update({
-        guild_id: main_interaction.guild.id,
-        value: setting,
-        type: 'antispam',
-    })
+    new Automod()
+        .update({
+            guild_id: main_interaction.guild.id,
+            value: setting,
+            type: 'antispam',
+        })
         .then(() => {
             errorhandler({
                 fatal: false,
                 message: `${main_interaction.guild.id} has been updated the antispam config.`,
+                id: 1694432722,
             });
 
             const description = setting.enabled
                 ? global.t.trans(
                       [
-                          'success.automod.antispam.enabled',
+                          'success.admin.automod.antispam.enabled',
                           setting.action,
                           setting.whitelistroles.map((role) => `<@&${role}>`).join(' ') || 'Empty',
                           setting.whitelistchannels.map((channel) => `<#${channel}>`).join(' ') ||
@@ -76,7 +78,10 @@ module.exports.run = async ({ main_interaction, bot }) => {
                       ],
                       main_interaction.guild.id
                   )
-                : global.t.trans(['success.automod.antispam.disabled'], main_interaction.guild.id);
+                : global.t.trans(
+                      ['success.admin.automod.antispam.disabled'],
+                      main_interaction.guild.id
+                  );
 
             main_interaction
                 .reply({

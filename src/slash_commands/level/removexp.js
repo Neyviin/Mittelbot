@@ -1,7 +1,5 @@
-const { SlashCommandBuilder } = require('discord.js');
-const { hasPermission } = require('../../../utils/functions/hasPermissions');
-const { Levelsystem } = require('../../../utils/functions/data/levelsystemAPI');
-const config = require('../../assets/json/_config/config.json');
+const { hasPermission } = require('~utils/functions/hasPermissions');
+const Levelsystem = require('~utils/classes/levelsystemAPI');
 const { removexpConfig } = require('../_config/level/removexp');
 const { EmbedBuilder } = require('discord.js');
 
@@ -32,7 +30,7 @@ module.exports.run = async ({ main_interaction, bot }) => {
                 ],
                 ephemeral: true,
             })
-            .catch((err) => {});
+            .catch(() => {});
     }
 
     const user = main_interaction.options.getUser('user');
@@ -45,7 +43,7 @@ module.exports.run = async ({ main_interaction, bot }) => {
                     new EmbedBuilder()
                         .setDescription(
                             global.t.trans(
-                                ['error.removexp.cannotRemoveFromBots'],
+                                ['error.level.removexp.cannotRemoveFromBots'],
                                 main_interaction.guild.id
                             )
                         )
@@ -53,10 +51,10 @@ module.exports.run = async ({ main_interaction, bot }) => {
                 ],
                 ephemeral: true,
             })
-            .catch((err) => {});
+            .catch(() => {});
     }
 
-    const currentXP = await Levelsystem.gain({
+    const currentXP = await new Levelsystem().gain({
         guild_id: main_interaction.guild.id,
         user_id: user.id,
     });
@@ -73,14 +71,14 @@ module.exports.run = async ({ main_interaction, bot }) => {
                 ],
                 ephemeral: true,
             })
-            .catch((err) => {});
+            .catch(() => {});
     }
 
-    const newAmount = Number(currentXP) - Number(amount);
+    let newAmount = Number(currentXP) - Number(amount);
 
     if (newAmount < 0) newAmount = 0;
 
-    const updated = await Levelsystem.update({
+    const updated = await new Levelsystem().update({
         guild_id: main_interaction.guild.id,
         user_id: user.id,
         value: newAmount,
@@ -94,7 +92,7 @@ module.exports.run = async ({ main_interaction, bot }) => {
                     new EmbedBuilder()
                         .setDescription(
                             global.t.trans(
-                                ['success.removexp.xpRemoved', amount, user],
+                                ['success.moderation.removexp.xpRemoved', amount, user],
                                 main_interaction.guild.id
                             )
                         )

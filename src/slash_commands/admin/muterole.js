@@ -1,6 +1,6 @@
 const { PermissionFlagsBits } = require('discord.js');
 const { muteRoleConfig, muterolePerms } = require('../_config/admin/muterole');
-const { GuildConfig } = require('../../../utils/functions/data/Config');
+const GuildConfig = require('~utils/classes/Config');
 const { EmbedBuilder } = require('discord.js');
 
 module.exports.run = async ({ main_interaction, bot }) => {
@@ -10,11 +10,12 @@ module.exports.run = async ({ main_interaction, bot }) => {
 
     switch (main_interaction.options.getSubcommand()) {
         case 'set':
-            await GuildConfig.update({
-                guild_id: main_interaction.guild.id,
-                valueName: 'muterole',
-                value: role.id,
-            })
+            await new GuildConfig()
+                .update({
+                    guild_id: main_interaction.guild.id,
+                    valueName: 'muterole',
+                    value: role.id,
+                })
                 .then(() => {
                     return main_interaction
                         .followUp({
@@ -22,7 +23,7 @@ module.exports.run = async ({ main_interaction, bot }) => {
                                 new EmbedBuilder()
                                     .setDescription(
                                         global.t.trans(
-                                            ['success.settings.muteRole.set', role],
+                                            ['success.admin.settings.muteRole.set', role],
                                             main_interaction.guild.id
                                         )
                                     )
@@ -52,11 +53,12 @@ module.exports.run = async ({ main_interaction, bot }) => {
             break;
 
         case 'remove':
-            await GuildConfig.update({
-                guild_id: main_interaction.guild.id,
-                valueName: 'muterole',
-                value: null,
-            })
+            await new GuildConfig()
+                .update({
+                    guild_id: main_interaction.guild.id,
+                    valueName: 'muterole',
+                    value: null,
+                })
                 .then(() => {
                     return main_interaction
                         .followUp({
@@ -64,7 +66,7 @@ module.exports.run = async ({ main_interaction, bot }) => {
                                 new EmbedBuilder()
                                     .setDescription(
                                         global.t.trans(
-                                            ['success.settings.muteRole.remove'],
+                                            ['success.admin.settings.muteRole.remove'],
                                             main_interaction.guild.id
                                         )
                                     )

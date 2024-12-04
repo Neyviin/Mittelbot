@@ -1,8 +1,8 @@
-const { hasPermission } = require('../../../utils/functions/hasPermissions');
+const { hasPermission } = require('~utils/functions/hasPermissions');
 
 const config = require('../../assets/json/_config/config.json');
-const Autodelete = require('../../../utils/functions/data/Autodelete');
-const { errorhandler } = require('../../../utils/functions/errorhandler/errorhandler');
+const Autodelete = require('~utils/classes/Autodelete');
+const { errorhandler } = require('~utils/functions/errorhandler/errorhandler');
 const { EmbedBuilder } = require('discord.js');
 const { autoDeleteConfig, autoDeletePerms } = require('../_config/admin/autodelete');
 
@@ -12,14 +12,20 @@ module.exports.run = async ({ main_interaction, bot }) => {
     });
 
     const typeTranslations = {
-        isOnlyMedia: global.t.trans(['info.autodelete.types.onlyMedia'], main_interaction.guild.id),
-        isOnlyText: global.t.trans(['info.autodelete.types.onlyText'], main_interaction.guild.id),
+        isOnlyMedia: global.t.trans(
+            ['info.admin.autodelete.types.onlyMedia'],
+            main_interaction.guild.id
+        ),
+        isOnlyText: global.t.trans(
+            ['info.admin.autodelete.types.onlyText'],
+            main_interaction.guild.id
+        ),
         isOnlyEmotes: global.t.trans(
-            ['info.autodelete.types.onlyEmotes'],
+            ['info.admin.autodelete.types.onlyEmotes'],
             main_interaction.guild.id
         ),
         isOnlyStickers: global.t.trans(
-            ['info.autodelete.types.onlyStickers'],
+            ['info.admin.autodelete.types.onlyStickers'],
             main_interaction.guild.id
         ),
     };
@@ -44,7 +50,7 @@ module.exports.run = async ({ main_interaction, bot }) => {
                                 .setDescription(
                                     global.t.trans(
                                         [
-                                            'warning.autodelete.get',
+                                            'warning.admin.autodelete.get',
                                             result ? 'have to' : "don't have to",
                                             typeTranslations[filtered[0]],
                                         ],
@@ -57,8 +63,9 @@ module.exports.run = async ({ main_interaction, bot }) => {
                     })
                     .catch((err) => {
                         errorhandler({
-                            err,
+                            message: `Error while followUp the autodelete config message ${err.message}`,
                             fatal: false,
+                            id: 1694432733,
                         });
                     });
             })
@@ -72,8 +79,9 @@ module.exports.run = async ({ main_interaction, bot }) => {
                     })
                     .catch((err) => {
                         errorhandler({
-                            err,
+                            message: `Error while followUp the autodelete config message ${err.message}`,
                             fatal: false,
+                            id: 1694432837,
                         });
                     });
             });
@@ -91,7 +99,7 @@ module.exports.run = async ({ main_interaction, bot }) => {
                                 .setDescription(
                                     global.t.trans(
                                         [
-                                            'success.autodelete.set',
+                                            'success.admin.autodelete.set',
                                             value ? 'have to' : "don't have to",
                                             typeTranslations[type],
                                         ],
@@ -104,8 +112,9 @@ module.exports.run = async ({ main_interaction, bot }) => {
                     })
                     .catch((err) => {
                         errorhandler({
-                            err,
+                            message: `Error while followUp the autodelete config message ${err.message}`,
                             fatal: false,
+                            id: 1694432843,
                         });
                     });
             })
@@ -119,8 +128,9 @@ module.exports.run = async ({ main_interaction, bot }) => {
                     })
                     .catch((err) => {
                         errorhandler({
-                            err,
+                            message: `Error while followUp the autodelete config message ${err.message}`,
                             fatal: false,
+                            id: 1694432858,
                         });
                     });
             });

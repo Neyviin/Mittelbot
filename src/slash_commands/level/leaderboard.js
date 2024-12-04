@@ -1,13 +1,13 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { EmbedBuilder } = require('discord.js');
-const { Levelsystem } = require('../../../utils/functions/data/levelsystemAPI');
+const Levelsystem = require('~utils/classes/levelsystemAPI');
 const { leaderboardConfig } = require('../_config/level/leaderboard');
 module.exports.run = async ({ main_interaction, bot }) => {
     await main_interaction.deferReply({
         ephemeral: true,
     });
 
-    const leaderboard = await Levelsystem.getRank({
+    const leaderboard = await new Levelsystem().getRank({
         guild_id: main_interaction.guild.id,
     });
 
@@ -30,7 +30,7 @@ module.exports.run = async ({ main_interaction, bot }) => {
                     new EmbedBuilder()
                         .setDescription(
                             global.t.trans(
-                                ['error.leaderboard.noOneRanked'],
+                                ['error.level.leaderboard.noOneRanked'],
                                 main_interaction.guild.id
                             )
                         )
@@ -72,12 +72,12 @@ module.exports.run = async ({ main_interaction, bot }) => {
             lb_embed.addFields([
                 {
                     name: global.t.trans(
-                        ['info.leaderboard.currentRank', userRank],
+                        ['info.level.leaderboard.currentRank', userRank],
                         main_interaction.guild.id
                     ),
                     value: global.t.trans(
                         [
-                            'info.leaderboard.XP_Level',
+                            'info.level.leaderboard.XP_Level',
                             userXP,
                             userLevel,
                             `<t:${last_message.toString().slice(0, 10)}:R>`,
@@ -90,11 +90,11 @@ module.exports.run = async ({ main_interaction, bot }) => {
             lb_embed.addFields([
                 {
                     name: global.t.trans(
-                        ['info.leaderboard.notRanksYet'],
+                        ['info.level.leaderboard.notRanksYet'],
                         main_interaction.guild.id
                     ),
                     value: global.t.trans(
-                        ['info.leaderboard.writeAMessageFirst'],
+                        ['info.level.leaderboard.writeAMessageFirst'],
                         main_interaction.guild.id
                     ),
                 },

@@ -1,10 +1,10 @@
-const { setNewModLogMessage } = require('../../modlog/modlog');
-const { privateModResponse } = require('../../privatResponses/privateModResponses');
-const { publicModResponses } = require('../../publicResponses/publicModResponses');
+const { setNewModLogMessage } = require('~utils/functions/modlog/modlog');
+const { privateModResponse } = require('~utils/functions/privatResponses/privateModResponses');
+const { publicModResponses } = require('~utils/functions/publicResponses/publicModResponses');
 const { createInfractionId } = require('../createInfractionId');
-const config = require('../../../src/assets/json/_config/config.json');
-const { errorhandler } = require('../errorhandler/errorhandler');
-const { Infractions } = require('../data/Infractions');
+const config = require('~assets/json/_config/config.json');
+const { errorhandler } = require('~utils/functions/errorhandler/errorhandler');
+const Infractions = require('~utils/classes/Infractions');
 
 module.exports.kickUser = ({ user, mod, guild, reason, bot }) => {
     return new Promise(async (resolve, reject) => {
@@ -26,7 +26,7 @@ module.exports.kickUser = ({ user, mod, guild, reason, bot }) => {
             .catch((err) => (pass = false));
 
         if (pass) {
-            Infractions.insertClosed({
+            new Infractions().insertClosed({
                 uid: user.id,
                 mod_id: mod.id,
                 ban: 0,
@@ -57,11 +57,12 @@ module.exports.kickUser = ({ user, mod, guild, reason, bot }) => {
             errorhandler({
                 fatal: false,
                 message: `${mod.id} has triggered the kick command in ${guild.id}`,
+                id: 1694433580,
             });
 
             return resolve(p_response.message);
         } else {
-            return reject(config.errormessages.nopermissions.kick);
+            return reject(global.t.trans(['error.permissions.bot.kick'], guild.id));
         }
     });
 };

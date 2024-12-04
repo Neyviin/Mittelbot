@@ -3,20 +3,20 @@ require('dotenv').config();
 const { sentryInit } = require('./sentry');
 sentryInit();
 
-const { Client, Options, GatewayIntentBits, Collection, Partials } = require('discord.js');
+const { Client, Options, GatewayIntentBits, Partials } = require('discord.js');
 
-const config = require('../../src/assets/json/_config/config.json');
+const config = require('~assets/json/_config/config.json');
 const version = require('../../package.json').version;
 
-const { errorhandler } = require('../../utils/functions/errorhandler/errorhandler');
-const { setActivity } = require('../../utils/functions/data/activity');
-const { processErrorHandler } = require('../../utils/functions/errorhandler/processErrorHandler');
+const { errorhandler } = require('~utils/functions/errorhandler/errorhandler');
+const { setActivity } = require('~utils/functions/activity');
+const { processErrorHandler } = require('~utils/functions/errorhandler/processErrorHandler');
 const { startBot } = require('./core');
-const { delay } = require('../../utils/functions/delay/delay');
+const { delay } = require('~utils/functions/delay');
 const { acceptBotInteraction } = require('./botEvents');
 const { Player } = require('discord-player');
-const { registerPlayerEvents } = require('../../src/events/player/player-events');
-const Translations = require('../../utils/functions/Translations/Translations');
+const { registerPlayerEvents } = require('../../bot/events/player/player-events');
+const Translations = require('~utils/functions/Translations/Translations');
 
 processErrorHandler();
 
@@ -46,9 +46,8 @@ const bot = new Client({
 bot.setMaxListeners(0);
 
 bot.version = version;
-bot.owner = config.Bot_Owner;
-bot.ownerId = config.Bot_Owner_ID;
-bot.testAcc = config.Test_Account;
+bot.ownerId = process.env.OWNER_ID;
+bot.testAcc = process.env.TEST_ACCOUNTS;
 
 bot.player = new Player(bot, {
     connectionTimeout: 60000 * 10,
@@ -58,6 +57,7 @@ bot.player = new Player(bot, {
         quality: 'highestaudio',
     },
     autoRegisterExtractor: false,
+    useLegacyFFmpeg: true,
 });
 registerPlayerEvents(bot.player, bot);
 
@@ -83,5 +83,7 @@ bot.once('ready', async () => {
         setActivity(bot);
     }, 3600000); // 1h
 });
+
+global.bot = bot;
 
 bot.login(process.env.DISCORD_TOKEN);

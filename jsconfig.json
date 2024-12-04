@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "baseUrl": "./",
+        "module": "CommonJS",
+        "paths": {
+            "~src/*": ["./src/*"],
+            "~utils/*": ["./utils/*"],
+            "~bot/*": ["./bot/*"],
+            "~core/*": ["./bot/core/*"],
+            "~assets/*": ["./src/assets/*"]
+        }
+    },
+    "exclude": ["node_modules"]
+}

@@ -2,8 +2,8 @@ const { ButtonStyle } = require('discord.js');
 const { ActionRowBuilder } = require('discord.js');
 const { ButtonBuilder } = require('discord.js');
 const { SlashCommandBuilder } = require('discord.js');
-const { errorhandler } = require('../../../utils/functions/errorhandler/errorhandler');
-const { kickUser } = require('../../../utils/functions/moderations/kickUser');
+const { errorhandler } = require('~utils/functions/errorhandler/errorhandler');
+const { kickUser } = require('~utils/functions/moderations/kickUser');
 const { kickmeConfig } = require('../_config/utils/kickme');
 
 module.exports.run = async ({ main_interaction, bot }) => {
@@ -45,7 +45,7 @@ module.exports.run = async ({ main_interaction, bot }) => {
                 components: [],
                 fetchReply: true,
             })
-            .catch((err) => {});
+            .catch(() => {});
     });
 
     collector.on('end', async (collected, reason) => {
@@ -57,12 +57,14 @@ module.exports.run = async ({ main_interaction, bot }) => {
                 reason: 'User executed /kickme command.',
                 bot,
             })
-                .then((res) => {
+                .then(() => {
                     errorhandler({
+                        fatal: false,
                         message: `${user.id} has triggered the /kickme command successfully.`,
+                        id: 1694432973,
                     });
                 })
-                .catch((err) => {
+                .catch(() => {
                     main_interaction.editReply({
                         content: `❌ I don't have permissions to kick you.`,
                         components: [],

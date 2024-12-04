@@ -1,10 +1,10 @@
 const { EmbedBuilder } = require('discord.js');
-const { Automod } = require('../../../utils/functions/data/Automod');
-const { errorhandler } = require('../../../utils/functions/errorhandler/errorhandler');
+const Automod = require('~utils/classes/Automod');
+const { errorhandler } = require('~utils/functions/errorhandler/errorhandler');
 const { autoModConfig, automodPerms } = require('../_config/admin/automod');
 
 module.exports.run = async ({ main_interaction, bot }) => {
-    const setting = await Automod.get(main_interaction.guild.id, 'automod');
+    const setting = await new Automod().get(main_interaction.guild.id, 'automod');
 
     switch (main_interaction.options.getSubcommand()) {
         case 'whitelistroles':
@@ -14,14 +14,14 @@ module.exports.run = async ({ main_interaction, bot }) => {
                 };
             }
             const role = main_interaction.options.getRole('role');
-            const remove = main_interaction.options.getString('remove');
+            const remove = main_interaction.options.getBoolean('remove');
 
             if (remove) {
                 setting.whitelistrole.roles = setting.whitelistrole.roles.filter(
                     (r) => r !== role.id
                 );
             } else {
-                const alreadyExists = await Automod.checkWhitelist({
+                const alreadyExists = await new Automod().checkWhitelist({
                     setting: setting,
                     role_id: role.id,
                     guild_id: main_interaction.guild.id,
@@ -32,7 +32,10 @@ module.exports.run = async ({ main_interaction, bot }) => {
                             new EmbedBuilder()
                                 .setDescription(
                                     global.t.trans(
-                                        ['error.automod.whitelistroles.alreadyExists', role.name],
+                                        [
+                                            'error.admin.automod.whitelistroles.alreadyExists',
+                                            role.name,
+                                        ],
                                         main_interaction.guild.id
                                     )
                                 )
@@ -43,15 +46,17 @@ module.exports.run = async ({ main_interaction, bot }) => {
                 setting.whitelistrole.roles.push(role.id);
             }
 
-            Automod.update({
-                guild_id: main_interaction.guild.id,
-                value: setting,
-                type: 'whitelist',
-            })
+            new Automod()
+                .update({
+                    guild_id: main_interaction.guild.id,
+                    value: setting,
+                    type: 'whitelist',
+                })
                 .then((res) => {
                     errorhandler({
                         fatal: false,
                         message: `${main_interaction.guild.id} has been updated the automod config.`,
+                        id: 1694432871,
                     });
                     main_interaction
                         .reply({

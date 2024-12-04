@@ -3,11 +3,14 @@ node_modules/
 .DS_Store
 ._*
 
-./core
+core
+!bot/core
 
 .env
 .env.prod
 .env.local
+.env.save
+.env.test
 
 Dockerfile.prod
 docker-compose.override.yml
@@ -15,3 +18,13 @@ docker-compose.override.yml
 backups/*
 
 .vscode
+.idea
+
+# Deployment
+
+_PipelineMapping/
+_actions/
+_tool/
+
+# Logs
+_debug/*.log

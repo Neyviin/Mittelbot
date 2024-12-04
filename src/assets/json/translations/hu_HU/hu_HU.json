@@ -1,0 +1,745 @@
+{
+    "general": {
+        "tryAgainLater": "Próbáld meg később.",
+        "colors": {
+            "success": "#00ff00",
+            "info": "#0000ff",
+            "warning": "#ffff00",
+            "error": "#ff0000"
+        },
+        "embed": {
+            "buttons": {
+                "cancel": "Elvetés"
+            }
+        }
+    },
+    "success": {
+        "emote": "✅",
+        "cheerEmote": "🎉",
+        "admin": {
+            "lang": {
+                "set": "{success.emote} A nyelv sikeresen megváltoztatva %c-re"
+            },
+            "counter": {
+                "removed": "{success.emote} Sikeresen eltávolította a számlálót.",
+                "set": "{success.emote} Sikeresen beállította a szamlálót %c-ra"
+            },
+            "joinroles": {
+                "updated": "{success.cheerEmote} Sikeresen frísítet mindegyik joinroles-okat",
+                "removedAll": "{success.emote} Sikeresen eltávolította midegyik joinroles-okat.",
+                "cleared": "{success.emote} Joinroles sikeresen takarítva."
+            },
+            "logs": {
+                "updatedWhitelist": "{success.emote} Sikeresen fríssített a fehérlista.",
+                "updatedLogs": "{success.emote} Sikeresen frissültek a naplók."
+            },
+            "modroles": {
+                "updated": "{success.emote} <@&%q> frissítve lett a következőre: %w",
+                "removed": "{success.emote} <@&%q> el lett távolítva a modrole beállitásokból."
+            },
+            "reactionroles": {
+                "updated": "{success.emote} A reakció-szerepek frissítésre kerülteltek.",
+                "removed": "{success.emote} A reakciós szerepek eltávolításra kerültek."
+            },
+            "welcome": {
+                "statusActivated": "{success.emote} A köszönő üzenetek sikeresen aktiválódtak.",
+                "statusDeactivated": "{success.emote} A köszönő üzenetek sikeresen deaktiválódtak.",
+                "removed": "{success.emote} A köszönő uzenetek sikeresen eltávolítva."
+            },
+            "settings": {
+                "muteRole": {
+                    "set": "{success.emote} A Némított szerep (role) sikeresen át lett álitva a %c szerepre.",
+                    "remove": "{success.emote} A némított szerep sikeresen eltávolítva."
+                },
+                "cooldown": {
+                    "set": "{success.emote} Parancs cooldown sikeresen megváltoztatva %c másodpercre.",
+                    "disabled": "{success.emote} Command Cooldown sikeresen kikapcsolva \n \n**Info: Az alapértelmezett 2 másodperces lehűlés továbbra is engedélyezve van, hogy megvédje a botot a spamtől!**"
+                }
+            },
+            "autoblacklist": {
+                "set": "{success.emote} Sikeresen beállította az automatikus feketelistát ezen a kiszolgálón.",
+                "delete": "{success.emote} Sikeresen törölte a szerver automatikus feketelistáját."
+            },
+            "autodelete": {
+                "set": "{success.emote} A %c felhasználók %e típusú üzeneteket küldenek"
+            },
+            "automod": {
+                "whitelistroles": {
+                    "add": "{success.emote} Sikeresen hozzáadta a szerepkört %c a fehérlistához."
+                },
+                "antispam": {
+                    "enabled": "{success.emote} Sikeresen engedélyezte a spam elleni védelmet a `%c` művelettel. \n\nWhitelistroles: %e\n\nWhitelistchannel: %q\n\nDetect Dublicates: %w\n\nPinglimit: %e.",
+                    "disabled": "{success.emote} Sikeresen kikapcsoltuk a spam elleni védelmet."
+                },
+                "antiinvite": {
+                    "enabled": "{success.emote} Sikeresen engedélyezte az Anti-invite-ot a `%c` művelettel. \n\nWhitelistroles: %e\n\nWhitelistchannel: %q\n\nWhitelistlinkek: %w\n\nFehérlistás meghívók: `%w`.",
+                    "disabled": "{success.emote} Sikeresen kikapcsoltuk a meghívásgátlást."
+                },
+                "antilinks": {
+                    "enabled": "{success.emote} Sikeresen engedélyezte az Anti-Linkeket a `%c` művelettel. \n\nWhitelistroles: %e\n\nWhitelistchannel: %q\n\nWhitelistlinks: `%w`.",
+                    "disabled": "{success.emote} Sikeresen letiltotta az Anti-Linkeket."
+                },
+                "antiinsults": {
+                    "removed": "{success.emote} Sikeresen eltávolította a `%c` sértést a listáról.",
+                    "enabled": "{success.emote} Sikeresen engedélyezte az Anti-Insultokat a `%c` művelettel. \n\nWhitelistroles: %e\n\nWhitelistchannel: %q\n\nWords: `%r`",
+                    "disabled": "{success.emote} Sikeresen kikapcsoltuk az Anti-Mass-Mentiont."
+                }
+            },
+            "autotranslate": {
+                "update": "{success.emote} Sikeresen frissítette az automatikus fordítás beállításait."
+            },
+            "banappeal": {
+                "set": "{success.emote} A tiltási fellebbezés beállítása megtörtént a szervereden. Egy példát küldünk az általad megadott csatornára, hogy hogyan fog kinézni.",
+                "remove": "{success.emote} A tiltási fellebbezést eltávolítottuk a szerveréről."
+            },
+            "levelsettings": {
+                "set": "{success.emote} Sikeresen elmentette a szint konfigurációját %c",
+                "setAlone": "{success.emote} Sikeresen elmentette a szint konfigurációját"
+            },
+            "modules": {
+                "update": "{success.emote} Sikeresen %c %x."
+            },
+            "warnroles": {
+                "update": "{success.emote} Figyelmeztető szerepek frissítve!"
+            }
+        },
+        "ticket": {
+            "setting": {
+                "set": "{success.emote} Sikeresen hozzáadta a jegybeállítást.",
+                "delete": "{success.emote} Sikeresen törölte a jegybeállítást."
+            },
+            "interacte": {
+                "create": "{success.emote} Sikeresen létrehozta a jegyét. %c",
+                "close": "{success.emote} Sikeresen lezártuk a jegyét.",
+                "saveTranscript": "{success.emote} Sikeresen elmentette az átiratot. Most már letöltheti. (A webes tárhely jelenleg nem támogatott)"
+            }
+        },
+        "fun": {
+            "ship": {
+                "showResult": "**%c** és **%e** megegyezik a \"%p%\"-val. \n\n `%r`"
+            },
+            "hangman": {
+                "createdPrv": "{success.emote} Sikeresen létrehozott egy új akasztófa játékot %q-ban (%w)",
+                "createdPub": "Egy akasztófás játék indult %c-ben",
+                "cancelled": "{success.emote} Sikeresen töröltük a hóhérjátékot %q-ban (%w)"
+            }
+        },
+        "moderation": {
+            "singasong": {
+                "userHasBeenBanned": "{success.emote} A felhasználót kitiltották a parancs használatából ebben a céhben!"
+            },
+            "givexp": {
+                "xpGiven": "{success.emote} %c xp hozzá lett adva %x-hez"
+            },
+            "removexp": {
+                "xpRemoved": "{success.emote} %c xp-t eltávolítottuk %x-ről"
+            },
+            "infractions": {
+                "removed": "A %c %x azonosítóval rendelkező szabálysértést el kell távolítani!"
+            },
+            "isBanned": {
+                "userIsBanned": "Ez a felhasználó ki van tiltva! Indoklás: `%c` by %x",
+                "userIsNotBanned": "Ez a felhasználó nincs bannolva!"
+            },
+            "purge": {
+                "purged": "{success.emote} Sikeresen el lett távolítva %c üzenet"
+            }
+        },
+        "music": {
+            "disconnect": "{success.emote} Megszakadt a kapcsolat a hangcsatornával.",
+            "pause": "{success.emote} Az aktuális dal szünetel.",
+            "play": {
+                "playlistAddedToQueue": "**%c** **%x** dalokkal került a várólistára.",
+                "songAddedToQueue": "[%c](%x) hozzá lett adva a várólistához."
+            },
+            "resume": {
+                "resumed": " {success.emote} Az aktuális dal folytatódott."
+            },
+            "skip": {
+                "skipped": "{success.emote} **%c** kihagyásra került.\n ---------------------------------- \nMost játszódik: %x \nKérte: %y \nIdőtartam: %v \nURL: %z"
+            },
+            "stop": {
+                "stopped": "{success.emote} A dal leállt, és a várólista kiürült. Viszlát 👋"
+            },
+            "shuffle": {
+                "enable": "{success.emote} Sikeresen engedélyezte a keverést."
+            },
+            "repeat": {
+                "enable": "{success.emote} Sikeresen engedélyezte az ismétlést.",
+                "disable": "{success.emote} Sikeresen letiltotta az ismétlést."
+            },
+            "volume": {
+                "set": "{success.emote} Sikeresen beállította a kötetet %c%"
+            }
+        },
+        "notifications": {
+            "reddit": {
+                "removed": "{success.cheerEmote} Sikeresen eltávolította a reddit értesítést %c-ről",
+                "added": "{success.cheerEmote} Sikeresen hozzáadta a reddit értesítést %c-hez"
+            },
+            "youtube": {
+                "added": "{success.cheerEmote} Sikeresen hozzáadta a `%q` youtube csatornát a listához.",
+                "removed": "{success.cheerEmote} Sikeresen eltávolítottuk a `%q` youtube csatornát."
+            },
+            "twitch": {
+                "added": "{success.cheerEmote} Sikeresen hozzáadta a `%q` twitch csatornát a listához.",
+                "updated": "{success.cheerEmote} Sikeresen frissítette a twitch értesítést a `%q`-hez",
+                "removed": "{success.cheerEmote} Sikeresen eltávolította a twitch csatornát az értesítési listáról."
+            }
+        },
+        "utils": {
+            "afk": {
+                "set": "{success.emote} Most már afk vagy. Ok `%q`",
+                "noLongerAfk": "{success.emote} Már nem vagy afk. Indoklás: %w Afk voltál: <t:%w:R>"
+            },
+            "password": {
+                "generated": "{success.emote} A jelszavadat generáltuk: `%c`"
+            },
+            "bug": {
+                "sent": "{success.emote} A hibajelentést elküldtük!"
+            }
+        }
+    },
+    "info": {
+        "emote": "💭",
+        "general": {
+            "tryCommandAgainWithoutArgs": "Próbálja újra a"
+        },
+        "admin": {
+            "messageUpdate": "**Az <@%q> által küldött üzenet szerkesztve <#%w>-ban\n[Ugrás az üzenetre](https://discord.com/channels/%e/%r/%t)**\n\n**Előtte**\n%z\n\n**After**\n%u",
+            "autoblacklist": {
+                "info": {
+                    "title": "Automatikus feketelista",
+                    "description": "Ez az összes automatikusan feketelistára került felhasználó listája.",
+                    "fields": [
+                        {
+                            "name": "Hogyan állíthatom be az automatikus feketelistát?",
+                            "value": "Az automatikus feketelista beállításához létre kell hoznia egy bejelentési csatornát, hozzá kell adnia egy feketelista webhookot, és a `/autoblacklist set <csatorna> [ban_message]` paranccsal kell beállítania."
+                        },
+                        {
+                            "name": "Hogyan használható az Auto-Blacklist?",
+                            "value": "Nem kell semmit sem tenned. Ha egy üzenetet a webhookon keresztül küldünk, az üzenetben szereplő összes felhasználói azonosító tiltásra kerül."
+                        },
+                        {
+                            "name": "Hogyan lehet eltávolítani az automatikus feketelistát?",
+                            "value": "Az Auto-Blacklist eltávolításához a `/autoblacklist delete` parancsot kell használnia."
+                        }
+                    ]
+                },
+                "scam": {
+                    "view": {
+                        "buttons": {
+                            "back": "Vissza",
+                            "forward": "Előre"
+                        },
+                        "title": "Minden átverés linkek mentett a közösségi adatbázisban",
+                        "link": "Link"
+                    }
+                }
+            },
+            "modroles": {
+                "info": {
+                    "admin": [
+                        {
+                            "name": "Admin engedélyek",
+                            "value": "Ez a szerepkör olyan parancsokat használhat, mint ban, unban, stb.",
+                            "inline": true
+                        }
+                    ],
+                    "mod": [
+                        {
+                            "name": "Mod engedélyek",
+                            "value": "Ez a szerepkör olyan parancsokat használhat, mint a kick, mute, stb.",
+                            "inline": true
+                        }
+                    ],
+                    "helper": [
+                        {
+                            "name": "Segítői engedélyek",
+                            "value": "Ez a szerepkör olyan parancsokat használhat, mint a figyelmeztetés stb.",
+                            "inline": true
+                        }
+                    ],
+                    "remove": [
+                        {
+                            "name": "Szerep eltávolítása",
+                            "value": "Ez a szerepkör lekerül a modroles listáról.",
+                            "inline": true
+                        }
+                    ]
+                }
+            },
+            "autodelete": {
+                "types": {
+                    "onlyMedia": "Média",
+                    "onlyText": "Szöveg",
+                    "onlyEmotes": "Emotes",
+                    "onlyStickers": "Matricák"
+                }
+            }
+        },
+        "ticket": {
+            "deletedTicket": "{info.emote} Ez a jegy 5 másodperc múlva törlődik...",
+            "transcript": {
+                "title": "Mentett jegy - %c",
+                "fields": {
+                    "id": "Jegyazonosító",
+                    "openedBy": "Megnyitotta",
+                    "closedBy": "Bezárta",
+                    "createdAt": "Készült a"
+                }
+            }
+        },
+        "music": {
+            "requestedBy": "Kérte",
+            "songsInQueue": "Dalok a sorban: %c",
+            "duration": "Időtartam: %c",
+            "nowplaying": "Most játszik: %c \nKérte: %x \nIdőtartam: %y \nURL: %v",
+            "nowPlayingOnlyTrack": "Most játszik %c",
+            "queue": {
+                "queueLength": "Dalok %c - %x",
+                "songEmbedName": "Song %c",
+                "songEmbedValue": "%c (%x)\n Kérte: %y"
+            },
+            "multipleSearchResultsFound": "Több keresési eredményt találtunk. Kérjük, válasszon egyet a következők közül:",
+            "trackAddedToQueue": "Pálya hozzáadva a várólistához: %c",
+            "disconnected": "Én manuálisan lekapcsolták vagy inaktivitás miatt maradtam a hangcsatornáról, a várólista törlése miatt!",
+            "emptyChannel": "Senki sincs a hangcsatornán, elhagyja a csatornát!",
+            "queueHasEnded": "A sor véget ért",
+            "notInAVC": "Most nem vagyok hangcsatornán."
+        },
+        "utils": {
+            "afk": {
+                "modalTitle": "Az AFK állapotod oka"
+            },
+            "checkGuild": {
+                "embed": {
+                    "title": "--- Minden információ lekérdezése %c-ről a Shard-azonosítón %x----",
+                    "description": "Jogi nyilatkozat: Ezek az információk nyilvánosak és minden bot számára hozzáférhetőek. Nem teszek közzé érzékeny adatokat!",
+                    "fields": [
+                        {
+                            "name": "Elérhető ez a szerver?"
+                        },
+                        {
+                            "name": "Céh leírás"
+                        },
+                        {
+                            "name": "Ellenőrzési szint:"
+                        },
+                        {
+                            "name": "Szabályok csatorna:"
+                        },
+                        {
+                            "name": "Tagok száma:"
+                        },
+                        {
+                            "name": "Csatornák száma:"
+                        },
+                        {
+                            "name:": "Szerepek száma:"
+                        },
+                        {
+                            "name": "Tilalomszámlálás:"
+                        },
+                        {
+                            "name": "Hiúság URL:"
+                        },
+                        {
+                            "name": "Hiúsági URL felhasználások:"
+                        },
+                        {
+                            "name": "NSFW szint:"
+                        },
+                        {
+                            "name": "Server Boosts:"
+                        },
+                        {
+                            "name": "Kiszolgáló Boost szint:"
+                        },
+                        {
+                            "name": "Nagy a szerver?"
+                        },
+                        {
+                            "name": "Maximális taglétszám:"
+                        },
+                        {
+                            "name": "AFK időzítő:"
+                        },
+                        {
+                            "name": "AFK csatorna:"
+                        },
+                        {
+                            "name": "Videócsatorna felhasználói korlát:"
+                        },
+                        {
+                            "name": "Kedvelt helyszín:"
+                        },
+                        {
+                            "name": "Tulajdonos"
+                        },
+                        {
+                            "name": "Csatlakoztam a:"
+                        }
+                    ]
+                }
+            },
+            "password": {
+                "removeBackticks": {
+                    "name": "[Csak mobilon/tableten] Backtickek eltávolítása",
+                    "value": "A megfelelő jelszóhoz el kell távolítani a jelszóból a hátsó írásjeleket ( ` )."
+                }
+            },
+            "oldestOrNewestmember": "** %c ** \n**csatlakozott:** %x ezelőtt \n **Fiók létrehozása:** %y ezelőtt",
+            "uptime": "Fent vagyok %c napok %x órák %y percek %z másodpercekig",
+            "imgur": "[Kattintson ide a kép megtekintéséhez]( %c )"
+        },
+        "fun": {
+            "punch": "Megütötted %c",
+            "timer": {
+                "timerEnded": "Az időzítőd lejárt!",
+                "timeLeft": "**Maradék idő:** %c",
+                "timeLeftTime": "**Maradt idő:** %q Nap(ok) %w Óra(ok) %e Perc(ek)"
+            },
+            "guessnumber": {
+                "guess": "Tippelje meg a számot 1 és %c között"
+            },
+            "pride": {
+                "sexuality": "Szexualitás: %c",
+                "genderSingle": "Nem: %c",
+                "similarto": "Hasonló a következőkhöz: ",
+                "genderField": "Nemek:",
+                "attractedto": "Vonzódik:",
+                "attactiontype": "Látványosság típusa:"
+            },
+            "ship": {
+                "quotes": [
+                    {
+                        "100_70": [
+                            "Ti ketten tökéletesen összeilletek!",
+                            "A francba! Tényleg együtt kell lógnotok.",
+                            "Hűha!",
+                            "Esküvő, mikor?"
+                        ],
+                        "69_40": [
+                            "hm. Talán egy kicsit több erőfeszítéssel valami különleges lehet belőle.",
+                            "Ti ketten jól összeilletek.",
+                            "Ez egy jó kezdet."
+                        ],
+                        "39_10": [
+                            "NEM TUDOM. Talán valaki mással kéne járnod."
+                        ],
+                        "9_0": [
+                            "Nem vagyok benne biztos, hogy egy ilyen emberrel barátkozhatsz-e.",
+                            "Ez rossz. Nagyon rossz.",
+                            "Bocsánat ezért"
+                        ]
+                    }
+                ]
+            },
+            "singasong": {
+                "userPoints": "%c pontod van."
+            },
+            "stromberg": {
+                "spokenof": "Beszédes:",
+                "age": "Kor:",
+                "position": "Pozíció:",
+                "episode": "Epizód:",
+                "createdAt": "Készült a:",
+                "playedBy": "Játszott:"
+            },
+            "hangman": {
+                "embed": {
+                    "fields": {
+                        "guessedLetters": "Talált betűk",
+                        "falsyGuessedLetters": "Falsy kitalálta a leveleket",
+                        "host": "Házigazda",
+                        "word": "Szó",
+                        "channel": "Csatorna",
+                        "lives": "Lives"
+                    }
+                },
+                "guessedWord": "{success.emote} %c kitalálta a szót! A szó a következő volt: \"%e",
+                "guessedLetter": "{success.emote} %c kitalálta a helyes betűt `%e`",
+                "gameOver": "{error.emote} Vége a játéknak! A szó `%c` volt",
+                "falsyGuessed": "{error.emote} %c rosszul találta ki a `%e` betűt."
+            }
+        },
+        "commands": {
+            "firstCommand": {
+                "description": "A legfrissebb információk, funkciók és hibák a hivatalos támogatási szerveren. Ott hibákat is jelenthet és funkciókat javasolhat. Csatlakozz most, vagy zárd be ezt az üzenetet örökre.",
+                "buttons": {
+                    "invite": "Csatlakozzon a támogatási szerverhez",
+                    "close": "Bezárni és soha többé nem kérdezni"
+                }
+            }
+        },
+        "notifications": {
+            "reddit": {
+                "new_post": "%q A subreddit %c új bejegyzést töltött fel. Nézd meg itt: %x",
+                "nsfwInfo": {
+                    "title": "🔞 NSFW",
+                    "description": "'Ez a bejegyzés NSFW-nek van jelölve. Kérjük, legyen óvatos a megtekintésével."
+                }
+            },
+            "twitch": {
+                "endedStream": "%q befejezte a streamet!",
+                "startedHrsAgo": "Stream indult %q órával ezelőtt - Utolsó frissítés",
+                "wasLiveFor": "Stream élő volt %q órákig",
+                "justWentLive": "%q épp most indult el!",
+                "justEnded": "%q most fejezte be a streamet!",
+                "fields": {
+                    "game": "Game",
+                    "viewers": "Nézők",
+                    "tags": "Címkék"
+                }
+            }
+        },
+        "level": {
+            "leaderboard": {
+                "title": "A %c 10 legjobb tagja.",
+                "currentRank": "Az Ön jelenlegi rangja: %c",
+                "XP_Level": "XP: %c Szint: %e Utolsó üzenet: %x",
+                "notRanksYet": "Még nincs rangod.",
+                "writeAMessageFirst": "Írd meg az első üzeneteidet, hogy xp-t szerezz."
+            }
+        },
+        "moderation": {
+            "warn": {
+                "hasAllWarnRoles": "❗️This felhasználó már rendelkezik minden warnroles.❗️"
+            }
+        }
+    },
+    "warning": {
+        "emote": "⚠️",
+        "admin": {
+            "autodelete": {
+                "get": " {warning.emote} A %c felhasználók %e típusú üzeneteket küldenek."
+            },
+            "modules": {
+                "notavalidmodule": "{warning.emote} %c nem érvényes modul.",
+                "isAlreadyEnabled": "{warning.emote} %c már engedélyezve van.",
+                "isAlreadyDisabled": "{warning.emote} %c már le van tiltva."
+            }
+        },
+        "music": {
+            "queueEnded": "{warning.emote} A várakozás véget ért. Csendet..."
+        }
+    },
+    "error": {
+        "emote": "❌",
+        "general": "{error.emote} Hiba történt a kérésed feldolgozásában. {general.tryAgainLater}",
+        "generalWithMessage": "{error.general} %c",
+        "modules": {
+            "notEnabled": "{error.emote} Ez a modul **(%c)** le van tiltva. Neked vagy a szerver adminisztrátorának először engedélyeznie kell, hogy használhassa ezt a parancsot."
+        },
+        "commands": {
+            "globallyDisabled": "Ez a parancs jelenleg minden kiszolgálón le van tiltva. További információkért csatlakozz a hivatalos támogatási discordhoz. https://mittelbot.xyz/support",
+            "disabledOnGuild": "Ez a parancs ki van kapcsolva a céhben."
+        },
+        "embed": {
+            "send": "{error.emote} Hiba történt a beágyazott üzenet elküldésében. {general.tryAgainLater}"
+        },
+        "timelimit": "{error.emote} Időlimit elérve",
+        "permissions": {
+            "user": {
+                "useCommand": "{error.emote} Nincs jogosultsága a parancs használatához."
+            },
+            "bot": {
+                "dontKnow": "{error.emote} Nekem nincs ilyen jogosultságom `%q`. Változtassa meg őket, és próbálja meg újra.",
+                "write": "{error.emote} Nincs engedélyem a %c-ben való íráshoz.",
+                "channelDelete": "{error.emote} Nincs jogosultságom a csatornák törlésére.",
+                "roleAdd": "{error.emote} Nincs jogosultságom szerepek hozzáadásához.",
+                "roleAddSpecific": "{error.emote} Nincs jogosultságom a %c szerep hozzáadásához.",
+                "manageReactions": "{error.emote} Nincs jogosultságom a reakciók kezeléséhez.",
+                "ban": "{error.emote} Nincs jogosultságom a tagok kitiltására.",
+                "kick": "{error.emote} Nincs jogosultságom tagokat rugdosni.",
+                "unban": "{error.emote} Nincs jogosultságom a tagok kitiltására.",
+                "manageRoles": "{error.emote} Nincs jogosultságom a szerepek kezeléséhez."
+            }
+        },
+        "input": {
+            "invalidLink": "{error.emote} %c nem érvényes link.",
+            "invalidNumber": "{error.emote} %c nem érvényes szám."
+        },
+        "ticket": {
+            "setting": {
+                "delete": "{error.emote} Hiba történt a jegybeállítás törlésében. {general.tryAgainLater}"
+            },
+            "MAX_SETTINGS": "{error.emote} Elérte a jegyek maximális számát (%c)",
+            "interacte": {
+                "create": "{error.emote} Hiba történt a jegy létrehozásában. {general.tryAgainLater}",
+                "close": "{error.emote} Hiba történt a jegye lezárásában. {general.tryAgainLater}",
+                "hasTicketAlready": "{error.emote} Önnek már van nyitott jegye."
+            }
+        },
+        "settings": {
+            "muteRole": {
+                "set": "{error.emote} Hiba történt a némító szerepkör beállításában. {general.tryAgainLater}",
+                "remove": "{error.emote} Hiba történt a némító szereped eltávolításában. {general.tryAgainLater}"
+            }
+        },
+        "music": {
+            "nothingPlays": "{error.emote} Jelenleg nincs lejátszott dal!",
+            "nothingInQueue": "{error.emote} Jelenleg nincs semmi a sorban!",
+            "play": {
+                "notValidInput": "{error.emote} Kérjük, küldjön egy érvényes linket vagy dalnevet",
+                "notSupported": "{error.emote} Nem támogatom a YouTube linkeket bizonyos jogi problémák miatt. Kérem, adjon meg egy spotify vagy soundcloud linket.",
+                "queueCreate": "{error.emote} Hiba történt a várólista létrehozásában. {general.tryAgainLater}",
+                "noResults": "{error.emote} Nincs találat a keresésedre. Ügyeljen arra, hogy érvényes linket küldjön.",
+                "botIsMuted": "{error.emote} Elnémultam ezen a csatornán. A várólistád szünetel. Kérem, vegye fel a némítást, hogy zenét játszhassak."
+            },
+            "queue": {
+                "queueError": "{error.emote} Hiba történt a várólistán. {general.tryAgainLater}"
+            },
+            "userIsNotInAVoiceChannel": "{error.emote} A parancs használatához hangcsatornán kell lenned!",
+            "botIsAlreadyInAVoiceChannel": "{error.emote} Már egy hangcsatornán vagyok! Kérlek, csatlakozz ahhoz a csatornához, vagy várj, amíg elmegyek",
+            "botIsNotInAVoiceChannel": "{error.emote} Nem vagyok hangcsatornán! Kérlek, először csatlakozz egy csatornához!",
+            "volume": {
+                "invalid": "{error.emote} Kérjük, adjon meg egy érvényes számot 0 és 100 között"
+            }
+        },
+        "notifications": {
+            "reddit": {
+                "doesNotExistsOrIsPrivate": "{error.emote} A `%c` alreddit nem létezik vagy privát.",
+                "isNsfw": "{error.emote} A `%c` subreddit NSFW-ként van megjelölve. Kérjük, használja az `nsfw` argumentumot az NSFW tartalmak engedélyezéséhez.",
+                "wasNotAddedBefore": "{error.emote} A `%c` alreddit még nem lett hozzáadva. Kérjük, használja a `add` argumentumot a hozzáadáshoz.",
+                "isAlreadyAdded": "{error.emote} A `%c` alreddit már hozzá lett adva. Kérjük, használja a `remove` argumentumot a törléséhez."
+            },
+            "twitch": {
+                "notFound": "{error.emote} Nem találtam az általad megadott csatornát.",
+                "maxReached": "{error.emote} Elérte a hozzáadható csatornák maximális számát (%q). Kérjük, először távolítson el egyet.",
+                "selectEveryChannel": "{error.emote}  Valami rosszul sült el az összes twitch csatorna kiválasztása közben. Kérjük, lépjen kapcsolatba a bot ügyfélszolgálattal.",
+                "removeChannel": "{error.emote} Valami rosszul sült el a csatorna eltávolítása közben. Kérjük, lépjen kapcsolatba a bot ügyfélszolgálattal."
+            },
+            "youtube": {
+                "channelNotFound": "{error.emote} Nem találtam meg az általad megadott `%q` nevű csatornát.",
+                "permissionCheck": "{error.emote} Valami rosszul sült el a jogosultságok ellenőrzése közben.",
+                "maxReached": "{error.emote} Elérte a hozzáadható csatornák maximális számát (%q). Kérjük, először távolítson el egyet.",
+                "alreadyExists": "{error.emote} A %q csatorna már hozzá van adva. Kérjük, használja a `remove` argumentumot a törléséhez."
+            }
+        },
+        "utils": {
+            "afk": {
+                "notAfk": "{error.emote} Nem vagy afk!",
+                "alreadyAfk": "{error.emote} Te már afk vagy! `Reason: %c` Az afk állapotod eltávolításához add hozzá a remove opciót."
+            },
+            "checkGuild": {
+                "serverNotFound": "Ez a szerver nem létezik, vagy nem vagyok tagja. Kérem, hívjon meg, hogy további információkat kapjak."
+            },
+            "password": {
+                "noValidLength": "{error.emote} A jelszónak %c és %x karakterek között kell lennie."
+            },
+            "imgur": {
+                "noValidLink": "{error.emote} Kérjük, küldjön egy érvényes Discord csatolmány linket. \n(Exp: https://cdn.discordapp.com/attachments/123456789012345678/123456789012345678/image.png)"
+            }
+        },
+        "fun": {
+            "counter": {
+                "sameUserAgain": "{error.emote} Nem számolhatsz kétszer egymás után!",
+                "wrongCount": "{error.emote} A megfelelő számmal kell számolnod. A helyes számnak %c-nek kell lennie",
+                "countReseted": "A számlálót visszaállították. Próbálja újra!"
+            },
+            "guessnumber": {
+                "tooLowOrHigh": "{error.emote} A tipped túl %c. %x volt.",
+                "haventguessed": "{error.emote} Még nem találta ki. %c volt."
+            },
+            "ship": {
+                "cannotShip": "Nem szállíthatsz %c-vel!"
+            },
+            "singasong": {
+                "nopoints": "Nincsenek pontjaid!"
+            },
+            "hangman": {
+                "alreadyRunningGameInChannel": "{error.emote} Ezen a csatornán már fut egy játék. Kérjük, várjon, amíg befejeződik.",
+                "noValidWord": "{error.emote} Kérjük, küldj egy érvényes szót.A szónak csak betűket kell tartalmaznia, és legalább 3 betű hosszúnak kell lennie.",
+                "notCancelled": "{error.emote} Nem tudsz leállítani egy olyan játékot, amely nem fut, vagy amelyet nem te rendezel."
+            }
+        },
+        "admin": {
+            "counter": {
+                "notFound": "{error.emote} Nem találtam semmilyen számláló beállítást ezen a szerveren.",
+                "alreadyExists": "{error.emote} Ezen a szerveren már van egy számláló. Kérjük, először törölje azt."
+            },
+            "joinroles": {
+                "notExists": "{error.emote} A szerep %c nem létezik ezen a szerveren. Minden korábban létező említés elmentésre kerül."
+            },
+            "logs": {
+                "alreadyRoleWhitelisted": "{error.emote} Ez a szerep már szerepel a fehér listán.",
+                "alreadyChannelWhitelisted": "{error.emote} Ez a csatorna már szerepel a fehér listán."
+            },
+            "reactionroles": {
+                "notEqual": "{error.emote} A szerepek és az emojik száma nem egyenlő.",
+                "messageLinkNotValid": "{error.emote} Az üzenet linkje nem érvényes.",
+                "messageNotFound": "{error.emote} Az üzenet nem található.",
+                "emojiDoesntExists": "{error.emote} Az emoji <:emote:&%c> nem létezik.",
+                "emojiNotFound": "{error.emote} Az emoji <:&%c> nem található.",
+                "roleDoesntExists": "{error.emote} Az emoji <:&%c> nem található.",
+                "roleNotFound": "{error.emote} A <@&%c> szerep nem található.",
+                "maxRoles": "{error.emote} Nem adhatsz hozzá több mint %c szerepet.",
+                "noReactionRolesInServer": "{error.emote} Ezen a kiszolgálón nincsenek reakciós szerepek."
+            },
+            "autoblacklist": {
+                "set": {
+                    "alreadySet": "{error.emote} Az automatikus feketelista már be van állítva erre a szerverre! Először törölje azt."
+                },
+                "delete": {
+                    "notSet": "{error.emote} Az automatikus feketelista nincs beállítva ezen a szerveren!"
+                }
+            },
+            "automod": {
+                "whitelistroles": {
+                    "alreadyExists": "{error.emote} A %c szerep már szerepel a fehérlistán. Ha el akarja távolítani, használja az opcionális `remove` argumentumot."
+                }
+            },
+            "banappeal": {
+                "set": "{error.emote} Hiba történt a példa elküldésekor a megadott csatornára. Kérem, győződjön meg róla, hogy megfelelő jogosultságokkal rendelkezem, különben a bot nem tud küldeni semmilyen Felhívást."
+            },
+            "levelsettings": {
+                "set": "{error.emote} Valami rosszul sült el a szintkonfigurációd %c-re történő módosítása közben.",
+                "setAlone": "{error.emote} Valami rosszul ment a szintkonfiguráció módosítása közben."
+            },
+            "modroles": {
+                "doesntExist": "{error.emote} A szerep %c nem létezik ezen a szerveren."
+            }
+        },
+        "moderation": {
+            "youcantx": {
+                "yourself": "{error.emote} Nem tudod %c magad!",
+                "bot": "{error.emote} Nem lehet %c egy bot!",
+                "mod": "{error.emote} Nem lehet %c moderátor!"
+            },
+            "mute": {
+                "noMuteRoleFoundOrCreated": "{error.emote} Nem találtunk vagy hoztunk létre néma szerepet. Kérjük, hozzon létre egy szerepet `Muted` névvel, és állítsa be a jogosultságokat ehhez a szerephez. Szükségem van a csatornán történő üzenetküldéshez és a szerepek kezeléséhez szükséges jogosultságra.",
+                "notAValidMuteRole": "%q nem érvényes néma szerepkör %w-ban. Hibaüzenet: %e",
+                "alreadyMuted": "{error.emote} Ez a felhasználó már elnémult!"
+            },
+            "ban": {
+                "alreadyBanned": "{error.emote} Ez a felhasználó már ki van tiltva."
+            },
+            "infractions": {
+                "dontHaveAny": "%c-nek nincsenek szabálysértései!",
+                "notFoundWithId": "Nincs szabálysértés ezzel az azonosítóval ` %c `"
+            },
+            "purge": {
+                "notAValidNumber": "{error.emote} Egy 1 és %c közötti számot kell megadnod."
+            },
+            "unban": {
+                "notBanned": "{error.emote} Ez a felhasználó nincs kitiltva!"
+            }
+        },
+        "level": {
+            "givexp": {
+                "cannotGiveToBots": "{error.emote} Nem adhatsz xp-t egy bothoz vagy egy rendszerfiókhoz."
+            },
+            "removexp": {
+                "cannotRemoveFromBots": "{error.emote} Nem tudod eltávolítani az xp-t egy bothoz vagy egy rendszerfiókhoz."
+            },
+            "leaderboard": {
+                "noOneRanked": "{error.emote} Nincs senki, aki rangsorolva van. Először írj üzenetet."
+            },
+            "rank": {
+                "nothingFound": "{error.emote} Nem találtam semmit ehhez a felhasználóhoz. Kérlek, előbb szerezz egy kis xp-t."
+            }
+        }
+    }
+}

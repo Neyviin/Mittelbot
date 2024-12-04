@@ -25,7 +25,8 @@
             "antispam",
             "antiinsults",
             "antiinvite",
-            "antilinks"
+            "antilinks",
+            "welcome"
         ]
     },
     "moderation": {
@@ -60,7 +61,7 @@
         "autoDisable": true,
         "listed": true,
         "name": "Welcome Utils",
-        "extraCommands": ["joinroles", "goodbye"]
+        "extraCommands": ["joinroles", "welcome"]
     },
     "autotranslate": {
         "autoDisable": true,
@@ -98,7 +99,10 @@
             "pause",
             "resume",
             "nowplaying",
-            "disconnect"
+            "disconnect",
+            "volume",
+            "shuffle",
+            "repeat"
         ]
     },
     "reddit": {
@@ -178,7 +182,8 @@
             "oldestmember",
             "newestmember",
             "uptime",
-            "imgur"
+            "imgur",
+            "bug"
         ]
     },
     "fun": {
@@ -196,7 +201,8 @@
             "stromberg",
             "singasong",
             "punch",
-            "fun"
+            "fun",
+            "hangman"
         ]
     },
     "help": {
@@ -220,6 +226,7 @@
         "modroles",
         "muterole",
         "tutorial",
-        "language"
+        "language",
+        "bug"
     ]
 }
